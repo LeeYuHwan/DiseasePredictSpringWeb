@@ -14,11 +14,13 @@ Disease Predict Using Spring Framework
 <br>
 수정사항 <br>
 --------------------------
+
 <br>
 
 <br>
 기본 구성 <br>
 --------------------------
+
 <img src="img/basic_map.png">  <br>
 
 
