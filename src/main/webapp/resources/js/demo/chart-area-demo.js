@@ -1,13 +1,14 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
+let myLineChart;
 
-function sendAjax(url) {
+function sendAjax(url, id) {
 
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", () => {
         let data = JSON.parse(oReq.responseText);
-        makeCharts(data);
+        makeCharts(data, id);
     });
     oReq.open("GET", url);
     oReq.send();
@@ -40,17 +41,79 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Area Chart Example
 
-function makeCharts(data){
+function makeCharts(data, id){
 	let year = [];
 	let num = [];
-	for(let i = 0; i < data.items.length; i++){
-		year.push(data.items[i].year);
-		num.push(data.items[i].num);
+	console.log(year);
+	console.log(num);
+	if (id === "ParasiteInfection"){
+		for(let i = 0; i < data.ParasiteInfection.length; i++){
+			year.push(data.ParasiteInfection[i].year);
+			num.push(data.ParasiteInfection[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "기생충 감염증 최근 확진자 수";
+	}
+	else if (id === "HepatitisC"){
+		for(let i = 0; i < data.HepatitisC.length; i++){
+			year.push(data.HepatitisC[i].year);
+			num.push(data.HepatitisC[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "C형 간염 최근 확진자 수";
+	}
+	else if (id === "RespiratoryInfections"){
+		for(let i = 0; i < data.RespiratoryInfections.length; i++){
+			year.push(data.RespiratoryInfections[i].year);
+			num.push(data.RespiratoryInfections[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "급성 호흡기 감염증 최근 확진자 수";
+	}
+	else if (id === "SexInfectiousDisease"){
+		for(let i = 0; i < data.SexInfectiousDisease.length; i++){
+			year.push(data.SexInfectiousDisease[i].year);
+			num.push(data.SexInfectiousDisease[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "성매개 감염병 최근 확진자 수";
+	}
+	else if (id === "EnteroInfections"){
+		for(let i = 0; i < data.EnteroInfections.length; i++){
+			year.push(data.EnteroInfections[i].year);
+			num.push(data.EnteroInfections[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "엔테로 바이러스감염증 최근 확진자 수";
+	}
+	else if (id === "Influenza"){
+		for(let i = 0; i < data.Influenza.length; i++){
+			year.push(data.Influenza[i].year);
+			num.push(data.Influenza[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "인플루엔자 최근 확진자 수";
+	}
+	else if (id === "IntestinalInfections"){
+		for(let i = 0; i < data.IntestinalInfections.length; i++){
+			year.push(data.IntestinalInfections[i].year);
+			num.push(data.IntestinalInfections[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "장관 감염증 최근 확진자 수";
+	}
+	else if (id === "HFMDisease"){
+		for(let i = 0; i < data.HFMDisease.length; i++){
+			year.push(data.HFMDisease[i].year);
+			num.push(data.HFMDisease[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "합병증동반 수족구병 최근 확진자 수";
+	}
+	else if (id === "ParasiteInfectionsAbroad"){
+		for(let i = 0; i < data.ParasiteInfectionsAbroad.length; i++){
+			year.push(data.ParasiteInfectionsAbroad[i].year);
+			num.push(data.ParasiteInfectionsAbroad[i].num);
+		}
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "해외 유입 기생충 감염증 최근 확진자 수";
 	}
 	
-	document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "성매개 감염병 최근 10년간 확진자 수";
-	var ctx = document.getElementById("myAreaChart");
-	var myLineChart = new Chart(ctx, {	
+	
+	
+	let ctx = document.getElementById("myAreaChart");
+	myLineChart = new Chart(ctx, {	
 	  type: 'line',
 	  data: {
 	    labels: year,
@@ -138,6 +201,16 @@ function makeCharts(data){
 	    }
 	  }
 	});
+	
 }
 
-sendAjax("http://localhost:8080/connect/api/showCharts");
+sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");
+
+let selectChart = document.querySelector(".dropdown-menu.dropdown-menu-right.shadow.animated--fade-in");
+selectChart.addEventListener("click", (evt) => {
+	
+	if(evt.target.className === "dropdown-item"){  
+		myLineChart.destroy();
+		sendAjax("http://localhost:8080/connect/api/showCharts", evt.target.id);
+	}      	
+});
