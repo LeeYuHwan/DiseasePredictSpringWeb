@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>		
+        #google-map {
+        	  background-color: #f8f9fc;
+			  width: 100%;
+			  overflow-x: hidden;
+			  flex: 1 0 auto;
+        }
+        #search-panel {
+        	flex: 1 0 auto;
+            position: absolute;
+            top: 10px;
+            left: 40%;
+            z-index: 5;
+            background-color: #FFFFFF;
+            padding: 5px;
+            border: 1px solid black;
+            text-align: center;
+            padding: left: 10px
+        }
+    </style>
+    <link href="http://localhost:8080/connect/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="http://localhost:8080/connect/resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <title>위험지역</title>
+</head>
+<body>
+	<div id="wrapper">
+	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>감염병별 통계</span></a>
+            </li>
+			<li class="nav-item active">
+                <a class="nav-link" href="map">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>위험지역</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <div class="sidebar-card">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+            </div>
+
+        </ul>         
+    <div id="search-panel">
+        <input id="address" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="협성대학교">
+        <button id="submit" class="btn btn-primary" type="button" value="Geocode">지도 검색</button>
+    </div>
+    <div id="google-map">
+    </div>
+ 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Google Map API -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=yourKey&callback=initMap&region=kr">
+    </script>
+    <script>
+        /**
+         * Google Map API 주소의 callback 파라미터와 동일한 이름의 함수이다.
+         * Google Map API에서 콜백으로 실행시킨다.
+         */
+        function initMap() {
+            console.log('Map is initialized.');
+ 
+            /**
+             * 맵을 설정한다.
+             * 1번째 파라미터 : 구글 맵을 표시할 위치. 여기서는 #google-map
+             * 2번째 파라미터 : 맵 옵션.
+             *      ㄴ zoom : 맵 확대 정도
+             *      ㄴ center : 맵 중심 좌표 설정
+             *              ㄴ lat : 위도 (latitude)
+             *              ㄴ lng : 경도 (longitude)
+             */
+            var seoul = { lat: 37.5642135 ,lng: 127.0016985 };
+            var map = new google.maps.Map(document.getElementById('google-map'), {
+                zoom: 12,
+                center: seoul
+            });
+
+
+
+            
+ 
+            /**
+             * Google Geocoding. Google Map API에 포함되어 있다.
+             */
+            var geocoder = new google.maps.Geocoder();
+ 
+            // submit 버튼 클릭 이벤트 실행
+            document.getElementById('submit').addEventListener('click', function() {
+                console.log('submit 버튼 클릭 이벤트 실행');
+ 
+                // 여기서 실행
+                geocodeAddress(geocoder, map);
+            });
+ 
+            /**
+             * geocodeAddress
+             * 
+             * 입력한 주소로 맵의 좌표를 바꾼다.
+             */
+            function geocodeAddress(geocoder, resultMap) {
+                console.log('geocodeAddress 함수 실행');
+ 
+                // 주소 설정
+                var address = document.getElementById('address').value;
+ 
+                /**
+                 * 입력받은 주소로 좌표에 맵 마커를 찍는다.
+                 * 1번째 파라미터 : 주소 등 여러가지. 
+                 *      ㄴ 참고 : https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingRequests
+                 * 
+                 * 2번째 파라미터의 함수
+                 *      ㄴ result : 결과값
+                 *      ㄴ status : 상태. OK가 나오면 정상.
+                 */
+                geocoder.geocode({'address': address}, function(result, status) {
+                    console.log(result);
+                    console.log(status);
+ 
+                    if (status === 'OK') {
+                        // 맵의 중심 좌표를 설정한다.
+                        resultMap.setCenter(result[0].geometry.location);
+                        // 맵의 확대 정도를 설정한다.
+                        resultMap.setZoom(18);
+                        // 맵 마커
+                        var marker = new google.maps.Marker({
+                            map: resultMap,
+                            position: result[0].geometry.location
+                        });
+ 
+                        // 위도
+                        console.log('위도(latitude) : ' + marker.position.lat());
+                        // 경도
+                        console.log('경도(longitude) : ' + marker.position.lng());
+                    } else {
+                        alert('지오코드가 다음의 이유로 성공하지 못했습니다 : ' + status);
+                    }
+                });
+            }
+        }
+    </script>
+ </div>
+</body>
+</html>
