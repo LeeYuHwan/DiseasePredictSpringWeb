@@ -13,6 +13,7 @@
         }
         #search-panel {
         	flex: 1 0 auto;
+        	width: 40%;
             position: absolute;
             top: 10px;
             left: 40%;
@@ -31,7 +32,7 @@
 
     <!-- Custom styles for this template-->
     <link href="http://localhost:8080/connect/resources/css/sb-admin-2.min.css" rel="stylesheet">
-    <title>위험지역</title>
+    <title>지역별 선별 진료소 위치</title>
 </head>
 <body>
 	<div id="wrapper">
@@ -57,7 +58,7 @@
 			<li class="nav-item active">
                 <a class="nav-link" href="map">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>위험지역</span></a>
+                    <span>내 주변 선별 진료소 위치</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="covid19">
@@ -160,11 +161,10 @@
                 <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
                 <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
-
         </ul>         
     <div id="search-panel">
-        <input id="address" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="내 현재 위치 검색">
-        <button id="submit" class="btn btn-primary" type="button" value="Geocode">지도 검색</button>
+        <input id="address" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="현재 내 주소 입력">       
+        <button id="submit" class="btn btn-primary" type="button" value="Geocode">주변 선별 진료소 검색</button>
     </div>
     <div id="google-map">
     </div>
@@ -176,5 +176,14 @@
     </script>
     <script src="http://localhost:8080/connect/resources/js/map.js?ver=1"></script>
  </div>
+ 	<!-- Bootstrap core JavaScript-->
+    <script src="http://localhost:8080/connect/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="http://localhost:8080/connect/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="http://localhost:8080/connect/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="http://localhost:8080/connect/resources/js/sb-admin-2.min.js"></script>
 </body>
 </html>

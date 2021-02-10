@@ -3,21 +3,25 @@
          * Google Map API에서 콜백으로 실행시킨다.
          */
 		let locData = [];
+		let locName = [];
 		let loc = [];
+		let careCenterLoc;
+		
 		function sendAjax(url, id) {
 		    let oReq = new XMLHttpRequest();
 		    oReq.addEventListener("load", () => {
 		        let data = JSON.parse(oReq.responseText);
-		        makeMaker(data, id);
+		        makeMarker(data, id);
 		    });
 		    oReq.open("GET", url);
 		    oReq.send();
 		}
 				
-        function makeMaker(data, id){
+        function makeMarker(data, id){
         	
         	for(let i = 0; i < data.careCenters.length; i++){
         		locData[i] = data.careCenters[i].address;
+        		locName[i] = data.careCenters[i].name;
         		loc[i] = data.careCenters[i].loc;
         	}
         
@@ -36,10 +40,10 @@
              *              ㄴ lng : 경도 (longitude)
              */
             
-            let seoul = { lat: 37.5642135 ,lng: 127.0016985 };
+            let centerZoom = { lat: 36.7 ,lng: 128.1 };
             let map = new google.maps.Map(document.getElementById('google-map'), {
-                zoom: 12,
-                center: seoul
+                zoom: 8,
+                center: centerZoom
             });
 
             let geocoder = new google.maps.Geocoder();
@@ -50,15 +54,13 @@
                 
                 var address = document.getElementById('address').value;
                 // 여기서 실행
-                for(let i = 0; i < loc.length; i++){               	
-                	if(loc[i] === address) geocodeAddress(locData[i], geocoder, map);                   	 
-                }
-               
+                geocodeAddress(address, geocoder, map, "", 0);
+                                                       
             });          
            }
         	
         	
-        function geocodeAddress(address, geocoder, resultMap) {
+        function geocodeAddress(address, geocoder, resultMap, name, sw) {
             console.log('geocodeAddress 함수 실행');
 
             /**
@@ -80,18 +82,50 @@
                     // 맵의 확대 정도를 설정한다.
                     resultMap.setZoom(18);
                     // 맵 마커
-                    var marker = new google.maps.Marker({
-                        map: resultMap,
-                        position: result[0].geometry.location
-                    });
+                    if(sw === 0){
+                    	careCenterLoc = result[0].formatted_address;
+                    	
+                        let changeMap = new google.maps.Map(document.getElementById('google-map'), {
+                            zoom: 8,
+                            center: result[0].formatted_address
+                        });
+                    	for(let i = 0; i < loc.length; i++){
+                        	console.log(careCenterLoc);
+                        	console.log(loc[i]);
+                        	if ( careCenterLoc.indexOf(loc[i]) != -1) {
+                        		geocodeAddress(locData[i], geocoder, changeMap, locName[i], 1);
+                        	}
+                        }
+                    }
+                    else {
+                    	var contentString = name;
+                    	var infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            size: new google.maps.Size(100,100)
+                        });
+                    	
+                    	var marker = new google.maps.Marker({
+                            map: resultMap,
+                            position: result[0].geometry.location,
+                            title: "주변 선별 진료소"
+                        });
+                    	
+                    	google.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(resultMap, marker);
+                        });
 
-                    // 위도
-                    console.log('위도(latitude) : ' + marker.position.lat());
-                    // 경도
-                    console.log('경도(longitude) : ' + marker.position.lng());
-                } else {
+                    	resultMap.setZoom(11);
+                    	// 위도
+                        console.log('위도(latitude) : ' + marker.position.lat());
+                        // 경도
+                        console.log('경도(longitude) : ' + marker.position.lng());
+                    }
+                                                         
+                } 
+                else {
                     alert('지오코드가 다음의 이유로 성공하지 못했습니다 : ' + status);
                 }
             });
         }
+               
         sendAjax("http://localhost:8080/connect/api/selective_care_center", 1);
