@@ -61,4 +61,8 @@ public class htmlController {
 	public String map() {
 		return "map.html";
 	}
+	@GetMapping("/covid19")
+	public String covid() {
+		return "covid19.html";
+	}
 }
