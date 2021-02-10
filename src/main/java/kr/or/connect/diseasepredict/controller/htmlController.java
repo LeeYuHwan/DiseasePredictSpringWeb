@@ -57,4 +57,12 @@ public class htmlController {
 	public String utilities_other() {
 		return "utilities_other.html";
 	}
+	@GetMapping("/map")
+	public String map() {
+		return "map.html";
+	}
+	@GetMapping("/covid19")
+	public String covid() {
+		return "covid19.html";
+	}
 }

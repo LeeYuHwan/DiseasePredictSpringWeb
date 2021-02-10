@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.connect.diseasepredict.dao.selectiveCareCenterDao;
 import kr.or.connect.diseasepredict.dao.showChartsInfectiousDiseaseDao;
+import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
 import kr.or.connect.diseasepredict.service.predictService;
 
@@ -13,6 +15,8 @@ import kr.or.connect.diseasepredict.service.predictService;
 public class predictServiceImpl implements predictService{
 	@Autowired
 	showChartsInfectiousDiseaseDao showChartsDao;
+	@Autowired
+	selectiveCareCenterDao CareCenterDao;
 	
 	@Override
 	public List<showCharts> getSexInfectiousDiseaseAll() {
@@ -65,6 +69,12 @@ public class predictServiceImpl implements predictService{
 	@Override
 	public List<showCharts> getRespiratoryInfectionsAll() {
 		List<showCharts> list = showChartsDao.respiratoryInfectionsAll();
+		return list;
+	}
+
+	@Override
+	public List<selectiveCareCenter> getSelectiveCareCenterAll() {
+		List<selectiveCareCenter> list = CareCenterDao.selectiveCareCenterAll();
 		return list;
 	}
 
