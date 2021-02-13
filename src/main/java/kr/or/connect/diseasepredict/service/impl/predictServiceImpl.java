@@ -1,12 +1,16 @@
 package kr.or.connect.diseasepredict.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.connect.diseasepredict.dao.covidUpdateInfoDao;
 import kr.or.connect.diseasepredict.dao.selectiveCareCenterDao;
 import kr.or.connect.diseasepredict.dao.showChartsInfectiousDiseaseDao;
+import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
 import kr.or.connect.diseasepredict.service.predictService;
@@ -17,6 +21,8 @@ public class predictServiceImpl implements predictService{
 	showChartsInfectiousDiseaseDao showChartsDao;
 	@Autowired
 	selectiveCareCenterDao CareCenterDao;
+	@Autowired
+	covidUpdateInfoDao covidUpdateDao;
 	
 	@Override
 	public List<showCharts> getSexInfectiousDiseaseAll() {
@@ -78,4 +84,17 @@ public class predictServiceImpl implements predictService{
 		return list;
 	}
 
+	@Override
+	public List<covidUpdateInfo> covidUpdateInfoAll() {		
+		List<covidUpdateInfo> list = covidUpdateDao.covidUpdateInfoAll();
+		return list;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Long covidUpdateInfoInsert(covidUpdateInfo covidUpdateInfos) {
+		covidUpdateInfos.setUpdatedate(new Date());
+		Long num = covidUpdateDao.covidUpdateInfoInsert(covidUpdateInfos);
+		return num;
+	}
 }
