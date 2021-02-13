@@ -11,4 +11,5 @@ public class sqls {
 	public static final String PARASITE_INFECTION_ABROAD_ALL = "SELECT * FROM parasite_infections_abroad";
 	public static final String RESPIRATORY_INFECTIONS_ALL = "SELECT * FROM respiratory_infections";
 	public static final String SELECTIVE_CARE_CENTER_ALL = "SELECT * FROM selective_care_center";
+	public static final String COVID_UPDATE_INFO_ALL = "SELECT * FROM covid_update_info";
 }
