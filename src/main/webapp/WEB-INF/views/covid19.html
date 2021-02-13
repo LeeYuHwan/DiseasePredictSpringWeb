@@ -338,8 +338,10 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">코로나 SIR, SEIR 모델</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <h1 class="h3 mb-0 text-gray-800">코로나 SEIR 모델</h1>
+                        <form action="covid_update" method="post" id="update_form">
+                        	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="covid_update"> 최신정보로 업데이트</a>
+                        </form>
                     </div>
 
                     <!-- Content Row -->
@@ -352,8 +354,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                               	 마지막 업데이트 날짜</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -370,8 +372,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                	현재 날짜</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -437,32 +439,11 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">기생충 감염증 최근 확진자 수</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">(통계) 질병을 선택하세요:</div>
-                                            <a class="dropdown-item" href="#" id="ParasiteInfection">기생충감염증</a>
-                                            <a class="dropdown-item" href="#" id="HepatitisC">C형 간염</a>
-                                            <a class="dropdown-item" href="#" id="RespiratoryInfections">급성호흡기감염증</a>
-                                            <a class="dropdown-item" href="#" id="SexInfectiousDisease">성매개감염병</a>
-                                            <a class="dropdown-item" href="#" id="EnteroInfections">엔테로바이러스감염증</a>
-                                            <a class="dropdown-item" href="#" id="Influenza">인플루엔자</a>
-                                            <a class="dropdown-item" href="#" id="IntestinalInfections">장관감염증</a>
-                                            <a class="dropdown-item" href="#" id="HFMDisease">합병증동반수족구병</a>
-                                            <a class="dropdown-item" href="#" id="ParasiteInfectionsAbroad">해외유입기생충감염증</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                    <h6 class="m-0 font-weight-bold text-primary">SEIR_Graph</h6>                                  
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                                        <canvas id="myAreaChart" width="583" height="300" class="chartjs-render-monitor" style="display: block; height: 160px; width: 311px;"></canvas>
-                                    </div>
+                                    <img class="seirImg" src="http://localhost:8080/connect/resources/seir_model/sin.png" style="object-fit: fill">								     
                                 </div>
                             </div>
                         </div>
@@ -472,7 +453,7 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">확진자 상황 그래프</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -493,13 +474,13 @@
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> 확진환자
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-success"></i> 검사중
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-info"></i> 격리해제
                                         </span>
                                     </div>
                                 </div>
@@ -680,7 +661,8 @@
     <script src="http://localhost:8080/connect/resources/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="http://localhost:8080/connect/resources/js/demo/chart-area-demo.js?ver=1"></script>
+    
     <script src="http://localhost:8080/connect/resources/js/demo/chart-pie-demo.js"></script>
+    <script src="http://localhost:8080/connect/resources/js/covid19.js"></script>
     </body>
 </html>
