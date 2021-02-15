@@ -163,7 +163,10 @@
             </div>
         </ul>         
     <div id="search-panel">
-        <input id="address" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="현재 내 주소 입력">       
+        <select name="sido" id="sido"></select>
+		<select name="sigugun" id="sigugun">
+			<option>시/군/구 선택</option>
+		</select><br>       
         <button id="submit" class="btn btn-primary" type="button" value="Geocode">주변 선별 진료소 검색</button>
     </div>
     <div id="google-map">
@@ -174,7 +177,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=yourKey&callback=initMap&region=kr">
     </script>
-    <script src="http://localhost:8080/connect/resources/js/map.js?ver=1"></script>
+    <script src="http://localhost:8080/connect/resources/js/map.js"></script>
  </div>
  	<!-- Bootstrap core JavaScript-->
     <script src="http://localhost:8080/connect/resources/vendor/jquery/jquery.min.js"></script>
