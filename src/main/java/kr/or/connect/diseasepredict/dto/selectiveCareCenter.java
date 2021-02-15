@@ -2,6 +2,7 @@ package kr.or.connect.diseasepredict.dto;
 
 public class selectiveCareCenter {
 	private int id;
+	private String sido;	
 	private String loc;
 	private String name;
 	private String address;
@@ -10,6 +11,12 @@ public class selectiveCareCenter {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getSido() {
+		return sido;
+	}
+	public void setSido(String sido) {
+		this.sido = sido;
 	}
 	public String getLoc() {
 		return loc;

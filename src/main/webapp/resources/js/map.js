@@ -1,32 +1,69 @@
 		/**
-         * Google Map API 주소의 callback 파라미터와 동일한 이름의 함수이다.
-         * Google Map API에서 콜백으로 실행시킨다.
-         */
-		let locData = [];
-		let locName = [];
+        * Google Map API 주소의 callback 파라미터와 동일한 이름의 함수이다.
+        * Google Map API에서 콜백으로 실행시킨다.
+        */
+
+		let locSido = [];
 		let loc = [];
+		let locName = [];
+		let locData = [];
+			
 		let careCenterLoc;
 		
 		function sendAjax(url, id) {
 		    let oReq = new XMLHttpRequest();
 		    oReq.addEventListener("load", () => {
 		        let data = JSON.parse(oReq.responseText);
-		        makeMarker(data, id);
+		        makeData(data, id);
 		    });
 		    oReq.open("GET", url);
 		    oReq.send();
 		}
 				
-        function makeMarker(data, id){
-        	
+        function makeData(data, id){       	
         	for(let i = 0; i < data.careCenters.length; i++){
-        		locData[i] = data.careCenters[i].address;
+        		locSido[i] = data.careCenters[i].sido;
+        		loc[i] = data.careCenters[i].loc;       		
         		locName[i] = data.careCenters[i].name;
-        		loc[i] = data.careCenters[i].loc;
-        	}
-        
+        		locData[i] = data.careCenters[i].address;
+        	}      
 		}
 		
+        let sido = ["시/도 선택","서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "세종", "전북", "전남", "경북", "경남", "제주"];
+        let area = ["시/군/구 선택"];
+        let mainCity = document.querySelector("#sido");
+        let subCity = document.querySelector("#sigugun");
+        
+        for(let i = 0; i < sido.length; i++){
+        	let optionT = document.createElement('option');
+            optionT.innerText = sido[i];
+            mainCity.append(optionT);
+        }
+            
+        mainCity.onchange = function(){       	
+        	subCity.options.length = 0;
+        	
+        	if(mainCity.options[mainCity.selectedIndex].innerText === "시/도 선택") {
+        		let optionT = document.createElement('option');
+                optionT.innerText = "시/군/구 선택";
+                subCity.append(optionT);
+        	}
+        	     	       	
+        	let locTmp = [];
+        	for(let i = 0; i < locSido.length; i++){
+        		if(mainCity.options[mainCity.selectedIndex].innerText === locSido[i]){
+        			locTmp.push(loc[i]);
+        		}
+        	}
+        	let locArray = Array.from(new Set(locTmp));
+        	
+        	for(let i = 0; i < locArray.length; i++){
+        		let optionT = document.createElement('option');
+                optionT.innerText = locArray[i];
+                subCity.append(optionT);
+        	}     	
+        }
+        
         function initMap() {
             console.log('Map is initialized.');
  
@@ -49,18 +86,33 @@
             let geocoder = new google.maps.Geocoder();
                      
             // submit 버튼 클릭 이벤트 실행
-            document.getElementById('submit').addEventListener('click', function() {
+            document.getElementById('submit').addEventListener('click', function() {                       	
                 console.log('submit 버튼 클릭 이벤트 실행');
                 
-                var address = document.getElementById('address').value;
-                // 여기서 실행
-                geocodeAddress(address, geocoder, map, "", 0);
-                                                       
+                // 시군구를 선택하였는지 체크
+                if(subCity.options[subCity.selectedIndex].innerText === "시/군/구 선택"){
+                	alert("지역을 선택하세요.");
+                }
+                else{
+                	// 여기서 실행
+                	
+                	let changeMap = new google.maps.Map(document.getElementById('google-map'), {
+                        zoom: 8,
+                        center: centerZoom
+                    });
+                	
+                	for(let i = 0; i < loc.length; i++){
+                    	if(loc[i] === subCity.options[subCity.selectedIndex].innerText){
+                    		console.log(locData[i] + " " + locName[i]);
+                    		geocodeAddress(locData[i] + " " + locName[i], geocoder, changeMap, locName[i]);
+                    	}
+                    } 
+                }                                                                                 
             });          
            }
         	
         	
-        function geocodeAddress(address, geocoder, resultMap, name, sw) {
+        function geocodeAddress(address, geocoder, resultMap, name) {
             console.log('geocodeAddress 함수 실행');
 
             /**
@@ -82,50 +134,32 @@
                     // 맵의 확대 정도를 설정한다.
                     resultMap.setZoom(18);
                     // 맵 마커
-                    if(sw === 0){
-                    	careCenterLoc = result[0].formatted_address;
-                    	
-                        let changeMap = new google.maps.Map(document.getElementById('google-map'), {
-                            zoom: 8,
-                            center: result[0].formatted_address
-                        });
-                    	for(let i = 0; i < loc.length; i++){
-                        	console.log(careCenterLoc);
-                        	console.log(loc[i]);
-                        	if ( careCenterLoc.indexOf(loc[i]) != -1) {
-                        		geocodeAddress(locData[i], geocoder, changeMap, locName[i], 1);
-                        	}
-                        }
-                    }
-                    else {
-                    	var contentString = name;
-                    	var infowindow = new google.maps.InfoWindow({
-                            content: contentString,
-                            size: new google.maps.Size(100,100)
-                        });
-                    	
-                    	var marker = new google.maps.Marker({
-                            map: resultMap,
-                            position: result[0].geometry.location,
-                            title: "주변 선별 진료소"
-                        });
-                    	
-                    	google.maps.event.addListener(marker, 'click', function() {
-                            infowindow.open(resultMap, marker);
-                        });
+                    let contentString = name;
+                	let infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        size: new google.maps.Size(100,100)
+                    });
+                	
+                	let marker = new google.maps.Marker({
+                        map: resultMap,
+                        position: result[0].geometry.location,
+                        title: "주변 선별 진료소"
+                    });
+                	
+                	google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(resultMap, marker);
+                    });
 
-                    	resultMap.setZoom(11);
-                    	// 위도
-                        console.log('위도(latitude) : ' + marker.position.lat());
-                        // 경도
-                        console.log('경도(longitude) : ' + marker.position.lng());
-                    }
-                                                         
+                	resultMap.setZoom(11);
+                	// 위도
+                    console.log('위도(latitude) : ' + marker.position.lat());
+                    // 경도
+                    console.log('경도(longitude) : ' + marker.position.lng());                                                       
                 } 
                 else {
                     alert('지오코드가 다음의 이유로 성공하지 못했습니다 : ' + status);
                 }
             });
         }
-               
+                      
         sendAjax("http://localhost:8080/connect/api/selective_care_center", 1);
