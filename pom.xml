@@ -199,7 +199,14 @@
 		    <artifactId>lombok</artifactId>
 		    <version>1.18.16</version>
 		    <scope>provided</scope>
-		</dependency>    
+		</dependency> 
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.13.1</version>
+		</dependency>
+		   
 	</dependencies>
     <build>
         <plugins>

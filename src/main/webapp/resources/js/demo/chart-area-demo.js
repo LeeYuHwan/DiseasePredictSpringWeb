@@ -2,13 +2,18 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 let myLineChart;
-
+let contentData;
+let data;
 function sendAjax(url, id) {
 
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", () => {
-        let data = JSON.parse(oReq.responseText);
-        makeCharts(data, id);
+        let ajaxData = JSON.parse(oReq.responseText);
+        if(id === "crawling") contentData = ajaxData;
+        else {
+        	data = ajaxData;
+        	makeCharts(id);
+        }
     });
     oReq.open("GET", url);
     oReq.send();
@@ -41,7 +46,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Area Chart Example
 
-function makeCharts(data, id){
+function makeCharts(id){
+	
 	let year = [];
 	let num = [];
 	console.log(year);
@@ -50,14 +56,18 @@ function makeCharts(data, id){
 		for(let i = 0; i < data.ParasiteInfection.length; i++){
 			year.push(data.ParasiteInfection[i].year);
 			num.push(data.ParasiteInfection[i].num);
-		}
-		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "기생충 감염증 최근 확진자 수";
+		}		
+		document.querySelector("#about").href = contentData.parasite_infectionContent[0].content;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.parasite_infectionContent[0].content;
+		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "기생충 감염증 최근 확진자 수";		
 	}
 	else if (id === "HepatitisC"){
 		for(let i = 0; i < data.HepatitisC.length; i++){
 			year.push(data.HepatitisC[i].year);
 			num.push(data.HepatitisC[i].num);
 		}
+		document.querySelector("#about").href = contentData.hepatitis_cContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.hepatitis_cContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "C형 간염 최근 확진자 수";
 	}
 	else if (id === "RespiratoryInfections"){
@@ -65,6 +75,8 @@ function makeCharts(data, id){
 			year.push(data.RespiratoryInfections[i].year);
 			num.push(data.RespiratoryInfections[i].num);
 		}
+		document.querySelector("#about").href = contentData.respiratory_infectionsContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.respiratory_infectionsContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "급성 호흡기 감염증 최근 확진자 수";
 	}
 	else if (id === "SexInfectiousDisease"){
@@ -72,6 +84,8 @@ function makeCharts(data, id){
 			year.push(data.SexInfectiousDisease[i].year);
 			num.push(data.SexInfectiousDisease[i].num);
 		}
+		document.querySelector("#about").href = contentData.sex_infectious_diseaseContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.sex_infectious_diseaseContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "성매개 감염병 최근 확진자 수";
 	}
 	else if (id === "EnteroInfections"){
@@ -79,6 +93,8 @@ function makeCharts(data, id){
 			year.push(data.EnteroInfections[i].year);
 			num.push(data.EnteroInfections[i].num);
 		}
+		document.querySelector("#about").href = contentData.entero_infectionsContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.entero_infectionsContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "엔테로 바이러스감염증 최근 확진자 수";
 	}
 	else if (id === "Influenza"){
@@ -86,6 +102,8 @@ function makeCharts(data, id){
 			year.push(data.Influenza[i].year);
 			num.push(data.Influenza[i].num);
 		}
+		document.querySelector("#about").href = contentData.influenzaContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.influenzaContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "인플루엔자 최근 확진자 수";
 	}
 	else if (id === "IntestinalInfections"){
@@ -93,6 +111,8 @@ function makeCharts(data, id){
 			year.push(data.IntestinalInfections[i].year);
 			num.push(data.IntestinalInfections[i].num);
 		}
+		document.querySelector("#about").href = contentData.intestinal_infectionsContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.intestinal_infectionsContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "장관 감염증 최근 확진자 수";
 	}
 	else if (id === "HFMDisease"){
@@ -100,6 +120,8 @@ function makeCharts(data, id){
 			year.push(data.HFMDisease[i].year);
 			num.push(data.HFMDisease[i].num);
 		}
+		document.querySelector("#about").href = contentData.hand_foot_and_mouth_diseaseContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.hand_foot_and_mouth_diseaseContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "합병증동반 수족구병 최근 확진자 수";
 	}
 	else if (id === "ParasiteInfectionsAbroad"){
@@ -107,6 +129,8 @@ function makeCharts(data, id){
 			year.push(data.ParasiteInfectionsAbroad[i].year);
 			num.push(data.ParasiteInfectionsAbroad[i].num);
 		}
+		document.querySelector("#about").href = contentData.parasite_infections_abroadContent[0].url;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.parasite_infections_abroadContent[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "해외 유입 기생충 감염증 최근 확진자 수";
 	}
 	
@@ -203,14 +227,23 @@ function makeCharts(data, id){
 	});
 	
 }
+function crawlingWait(){
+	setTimeout(function() {
+		if(!contentData === false){
+			sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");		
+		}
+		else crawlingWait();
+	}, 500);
+}
 
-sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");
+crawlingWait();
+sendAjax("http://localhost:8080/connect/api/diseaseInfocrawling", "crawling");
 
 let selectChart = document.querySelector(".dropdown-menu.dropdown-menu-right.shadow.animated--fade-in");
 selectChart.addEventListener("click", (evt) => {
 	
 	if(evt.target.className === "dropdown-item"){  
 		myLineChart.destroy();
-		sendAjax("http://localhost:8080/connect/api/showCharts", evt.target.id);
+		makeCharts(evt.target.id);			
 	}      	
 });
