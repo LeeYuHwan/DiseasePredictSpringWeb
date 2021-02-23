@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.connect.diseasepredict.dao.covidUpdateInfoDao;
 import kr.or.connect.diseasepredict.dao.selectiveCareCenterDao;
 import kr.or.connect.diseasepredict.dao.showChartsInfectiousDiseaseDao;
+import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
@@ -91,10 +92,23 @@ public class predictServiceImpl implements predictService{
 	}
 
 	@Override
+	public List<covidCityRank> covidCityRankAll() {
+		List<covidCityRank> list = covidUpdateDao.covidCityRankAll();
+		return list;
+	}
+	
+	@Override
 	@Transactional(readOnly = false)
 	public Long covidUpdateInfoInsert(covidUpdateInfo covidUpdateInfos) {
 		covidUpdateInfos.setUpdatedate(new Date());
 		Long num = covidUpdateDao.covidUpdateInfoInsert(covidUpdateInfos);
 		return num;
 	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Long covidCityRankInsert(covidCityRank covidCityRanks) {
+		Long num = covidUpdateDao.covidCityRankInsert(covidCityRanks);
+		return num;
+	}	
 }

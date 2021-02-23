@@ -3,11 +3,22 @@ from urllib.request import urlopen
 from numpy import array as vector
 from flask import Flask
 
-def getCoronaData(value):
-	response = urlopen("https://api.corona-19.kr/korea/?serviceKey=eUPai5pXJsw4o8dIYvChuOKyNHcgjRWST").read().decode('utf-8')
-	responseJson = json.loads(response)
-	return responseJson.get(value)
+covidData = [];
 
+def getCoronaData():
+    response = urlopen("https://api.corona-19.kr/korea/?serviceKey=eUPai5pXJsw4o8dIYvChuOKyNHcgjRWST").read().decode('utf-8')
+    responseJson = json.loads(response)
+    covidData.append(responseJson.get("checkingCounter").replace(",",""))
+    covidData.append(responseJson.get("TotalCase").replace(",",""))
+    covidData.append(responseJson.get("TotalRecovered").replace(",",""))
+    covidData.append(responseJson.get("city1n").replace(",",""))
+    covidData.append(responseJson.get("city2n").replace(",",""))
+    covidData.append(responseJson.get("city3n").replace(",",""))
+    covidData.append(responseJson.get("city4n").replace(",",""))
+    covidData.append(responseJson.get("city5n").replace(",",""))
+    print("검사중 : " + covidData[0] + " /확진자 : " + covidData[1] + " /격리해제자 : " + covidData[2])  
+    print(covidData)
+       
 # Explicit Euler method
 def euler_method(f,t0,x0,t1,h):
     t = t0; x = x0
@@ -49,10 +60,12 @@ def diagram(simulation):
     plot.savefig('./sin.png')    
     
 def simulation1():
+    covidData.clear()
+    getCoronaData()
     N = 51820000 # 우리나라 인구수
     R0 = 3; gamma = 0.07 # 코로나 R0 추정치 2.2~3.3 중 3 사용, 평균잠복기 1 / 14일 = 0.07
-    eTmp = int(getCoronaData("checkingCounter").replace(",",""))
-    iTmp = int(getCoronaData("TotalCase").replace(",",""))
+    eTmp = int(covidData[0])
+    iTmp = int(covidData[1])
     return SEIR_simulation(
         beta = R0*gamma, gamma = gamma, a = 1/5.5, #평균지연시간
         E0 = eTmp/N, I0 = iTmp/N, days = 230)
@@ -60,9 +73,12 @@ def simulation1():
 app = Flask (__name__)
  
 @app.route('/seir')
-def hello_world():
-    diagram(simulation1) 
-    return 'seirServerRun'
+def runServer():
+    diagram(simulation1)
+    valueStr = ""
+    for i in covidData:
+        valueStr += i + " "
+    return valueStr
  
 if __name__ == "__main__":
     app.run()

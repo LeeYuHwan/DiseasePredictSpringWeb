@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.service.predictService;
 
@@ -38,8 +39,21 @@ public class coronaUpdateController {
 		
 	    if(result != "") {
 	    	covidUpdateInfo covidUpdateInfos = new covidUpdateInfo();
+	    	String data[] = result.split(" ");
+	    	covidUpdateInfos.setCheckingCounter(Integer.parseInt(data[0]));
+	    	covidUpdateInfos.setTotalCase(Integer.parseInt(data[1]));
+	    	covidUpdateInfos.setTotalRecovered(Integer.parseInt(data[2]));
 	    	Long num = covidService.covidUpdateInfoInsert(covidUpdateInfos);
-	    	System.out.println(num + "개 날짜 정보 업데이트 완료.");
+	    	System.out.println("지금까지 " + num + "개의 날짜와 확진자 정보 업데이트 되었습니다.");
+	    	
+	    	covidCityRank covidCityRanks = new covidCityRank();
+	    	covidCityRanks.setN1(data[3]);
+	    	covidCityRanks.setN2(data[4]);
+	    	covidCityRanks.setN3(data[5]);
+	    	covidCityRanks.setN4(data[6]);
+	    	covidCityRanks.setN5(data[7]);
+	    	Long num2 = covidService.covidCityRankInsert(covidCityRanks);
+	    	System.out.println("지금까지 " + num2 + "개의 도시 순위 정보 업데이트 되었습니다.");
 	    }
 	    
 		return "covid19.html";
