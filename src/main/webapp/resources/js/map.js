@@ -102,10 +102,12 @@
                     });
                 	
                 	for(let i = 0; i < loc.length; i++){
-                    	if(loc[i] === subCity.options[subCity.selectedIndex].innerText){
-                    		console.log(locData[i] + " " + locName[i]);
-                    		geocodeAddress(locData[i] + " " + locName[i], geocoder, changeMap, locName[i]);
-                    	}
+                		if(locSido[i] == mainCity.options[mainCity.selectedIndex].innerText){
+                			if(loc[i] === subCity.options[subCity.selectedIndex].innerText){
+                        		console.log(locData[i] + " " + locName[i]);
+                        		geocodeAddress(locData[i] + " " + locName[i], geocoder, changeMap, locName[i]);
+                        	}
+                		}                	
                     } 
                 }                                                                                 
             });          
