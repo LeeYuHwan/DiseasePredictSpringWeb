@@ -67,18 +67,18 @@ public class htmlController {
 	}
 	
 	//게시판 컨트롤러
-	@GetMapping("/board_list")
+	/*@GetMapping("/board_list")
 	public String BoardList() {
 		return "/board/board_list.jsp";
-	}
+	}*/
 	@GetMapping("/board_modify")
 	public String BoardModify() {
 		return "/board/board_modify.jsp";
 	}
-	@GetMapping("/board_get")
+	/*@GetMapping("/board_get")
 	public String BoardGet() {
 		return "/board/board_get.jsp";
-	}
+	}*/
 	@GetMapping("/board_get_tmp")
 	public String BoardGet_tmp() {
 		return "/board/board_get_tmp.jsp";
