@@ -18,7 +18,7 @@
 				<div class="panel-heading">Board Register</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-					<form role="form" action="/board/register" method="post">
+					<form role="form" action="board_register_add" method="post">
         				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>  
 						<div class="form-group">
 							<label>Title</label>
@@ -32,7 +32,7 @@
 						
 						<div class="form-group">
 							<label>Writer</label>
-							<input class="form-control" name='writer' value='<sec:authentication property="principal.username"/>' readonly="readonly">	
+							<input class="form-control" name='writer' value='testWriter' readonly="readonly">	
 						</div>
 						<button type="submit" class="btn btn-default">Submit Button</button>
 						<button type="reset" class="btn btn-default">Reset Button</button>
