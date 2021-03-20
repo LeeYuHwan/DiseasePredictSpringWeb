@@ -1,8 +1,14 @@
 package kr.or.connect.diseasepredict.dao;
 
 import static kr.or.connect.diseasepredict.dao.BoardSqls.DELETE;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_CONTENT;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_CONTENT_TITLE;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_LIST;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TITLE;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TITLE_CONTENT_WRITER;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TITLE_WRITER;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TOTAL_COUNT;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_WRITER;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.READ;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.UPDATE;
 
@@ -66,4 +72,36 @@ public class BoardDao {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(boradVO);
 		return insertAction.executeAndReturnKey(params).longValue();		
 	}
+	
+	//-------검색부분-------
+	public List<BoardVO> getTitle(String search){	
+		Map<String, ?> params = Collections.singletonMap("search", search);
+		return jdbc.query(GET_TITLE, params, infoRowMapper);		
+	}
+	public List<BoardVO> getContent(String search){	
+		Map<String, Object> params = new HashMap<String, Object>();
+	    params.put("search", "%" + search + "%");
+		return jdbc.query(GET_CONTENT, params, infoRowMapper);		
+	}
+	public List<BoardVO> getWriter(String search){	
+		Map<String, ?> params = Collections.singletonMap("search", search);
+		return jdbc.query(GET_WRITER, params, infoRowMapper);		
+	}
+	public List<BoardVO> getContentTitle(String search){	
+		Map<String, Object> params = new HashMap<String, Object>();
+	    params.put("content", "%" + search + "%");
+	    params.put("search", search);
+		return jdbc.query(GET_CONTENT_TITLE, params, infoRowMapper);		
+	}
+	public List<BoardVO> getTitleWriter(String search){	
+		Map<String, ?> params = Collections.singletonMap("search", search);
+		return jdbc.query(GET_TITLE_WRITER, params, infoRowMapper);		
+	}
+	public List<BoardVO> getTitleContentWriter(String search){
+		Map<String, Object> params = new HashMap<String, Object>();
+	    params.put("content", "%" + search + "%");
+	    params.put("search", search);
+		return jdbc.query(GET_TITLE_CONTENT_WRITER, params, infoRowMapper);		
+	}
+
 }

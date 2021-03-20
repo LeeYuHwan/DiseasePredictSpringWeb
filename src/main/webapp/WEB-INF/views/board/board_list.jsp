@@ -43,8 +43,8 @@
 					
 					<div class='row'>
 						<div class="col-lg-12">
-							<form id='searchForm' action="/board/list" method='get'>
-								<select name='type'>
+							<form id='searchForm' action="board_search" method='get'>
+								<select id="typeId" name='type'>
 									<option value=""
 										<c:out value="${pageMaker.cri.type == null ? 'selected' : '' }"/>>--</option>
 									<option value="T"
@@ -63,6 +63,7 @@
 								<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>' />
 								<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum }"/>'>
 								<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount }"/>'>
+								<input type='hidden' name="select" id="select" value="">
 								<button class='btn btn-default'>Search</button>
 							</form>
 						</div>
@@ -171,6 +172,12 @@
 				
 				searchForm.submit();
 			});
+		});
+		
+		var selectType = document.querySelector("#typeId");
+		selectType .addEventListener("click", (evt) => {			
+			console.log(evt.target.value); 
+			document.querySelector("#select").value = evt.target.value;		
 		});
 	</script>
 	

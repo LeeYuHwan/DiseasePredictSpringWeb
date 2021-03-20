@@ -31,6 +31,51 @@ public class BoardController
 		return "/board/board_list.jsp";
 	}
 	
+	@GetMapping("/board_search")
+	public String search(@RequestParam("keyword") String keyword,
+            			@RequestParam("select") String select,
+            			Model model)
+	{
+		//T C W TC TW TWC
+		List<BoardVO> boardList;
+		if(select.equals("T")) {
+			boardList = service.getTitle(keyword);
+			System.out.println("제목 검색");
+		}
+		else if(select.equals("C")) {
+			boardList = service.getContent(keyword);
+			System.out.println("내용 검색");
+		}
+		else if(select.equals("W")) {
+			boardList = service.getWriter(keyword);	
+			System.out.println("작성자 검색");
+		}
+		else if(select.equals("TC")) {
+			boardList = service.getContentTitle(keyword);
+			System.out.println("제목이나 내용 검색");
+		}
+		else if(select.equals("TW")) {
+			boardList = service.getTitleWriter(keyword);
+			System.out.println("제목이나 작성자 검색");
+		}
+		else if(select.equals("TWC")) {
+			boardList = service.getTitleContentWriter(keyword);
+			System.out.println("제목이나 작성자나 내용 검색");
+		}
+		else {
+			boardList = service.getList();
+			System.out.println("그외 검색");
+		}		
+		System.out.println(keyword);
+		System.out.println(select);
+		model.addAttribute("list", boardList);
+		long total = service.getTotalCount();
+		System.out.println("total: " + total);
+		//model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
+		return "/board/board_list.jsp";
+	}
+	
 	/*@GetMapping("/register")
 	//@PreAuthorize("isAuthenticated()")
 	public void register() {

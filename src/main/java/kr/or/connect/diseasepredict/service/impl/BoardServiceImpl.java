@@ -57,5 +57,41 @@ public class BoardServiceImpl implements BoardService
 		long count = boardDao.insert(boardVO);
 		boardVO.setBno(count);
 		return boardVO;
+	}
+
+	@Override
+	public List<BoardVO> getTitle(String search) {
+		List<BoardVO> list = boardDao.getTitle(search);
+		return list;
+	}
+
+	@Override
+	public List<BoardVO> getContent(String search) {
+		List<BoardVO> list = boardDao.getContent(search);
+		return list;
+	}
+
+	@Override
+	public List<BoardVO> getWriter(String search) {
+		List<BoardVO> list = boardDao.getWriter(search);
+		return list;
+	}
+
+	@Override
+	public List<BoardVO> getContentTitle(String search) {
+		List<BoardVO> list = boardDao.getContentTitle(search);
+		return list;
+	}
+
+	@Override
+	public List<BoardVO> getTitleWriter(String search) {
+		List<BoardVO> list = boardDao.getTitleWriter(search);
+		return list;
+	}
+
+	@Override
+	public List<BoardVO> getTitleContentWriter(String search) {
+		List<BoardVO> list = boardDao.getTitleContentWriter(search);
+		return list;
 	}	
 }
