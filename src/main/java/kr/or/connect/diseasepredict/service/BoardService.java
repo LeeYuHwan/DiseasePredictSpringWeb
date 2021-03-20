@@ -12,4 +12,10 @@ public interface BoardService
 	public Long update(BoardVO boardVO, Long bno);
 	public Long getTotalCount();
 	public BoardVO insert(BoardVO boardVO);
+	public List<BoardVO> getTitle(String search);
+	public List<BoardVO> getContent(String search);
+	public List<BoardVO> getWriter(String search);
+	public List<BoardVO> getContentTitle(String search);
+	public List<BoardVO> getTitleWriter(String search);
+	public List<BoardVO> getTitleContentWriter(String search);
 }
