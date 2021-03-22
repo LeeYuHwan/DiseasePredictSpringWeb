@@ -36,7 +36,7 @@ public class coronaUpdateController {
 	    result = restTemplate.getForObject("http://127.0.0.1:5000/seir", String.class);
 	    System.out.println("------------------ 호출 결과 ------------------");
 	    System.out.println(result);
-		
+		//추가해야할 것 http://127.0.0.1:5000/sir_japan
 	    if(result != "") {
 	    	covidUpdateInfo covidUpdateInfos = new covidUpdateInfo();
 	    	String data[] = result.split(" ");
