@@ -9,7 +9,7 @@ function sendAjax(url, id) {
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", () => {
         let ajaxData = JSON.parse(oReq.responseText);
-        if(id === "crawling") contentData = ajaxData;
+        if(id === "crawling" || id === "content") contentData = ajaxData;
         else {
         	data = ajaxData;
         	makeCharts(id);
@@ -57,8 +57,8 @@ function makeCharts(id){
 			year.push(data.ParasiteInfection[i].year);
 			num.push(data.ParasiteInfection[i].num);
 		}		
-		document.querySelector("#about").href = contentData.parasite_infectionContent[0].content;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.parasite_infectionContent[0].content;
+		document.querySelector("#about").href = contentData.contents[0].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[0].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "기생충 감염증 최근 확진자 수";		
 	}
 	else if (id === "HepatitisC"){
@@ -66,8 +66,8 @@ function makeCharts(id){
 			year.push(data.HepatitisC[i].year);
 			num.push(data.HepatitisC[i].num);
 		}
-		document.querySelector("#about").href = contentData.hepatitis_cContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.hepatitis_cContent[0].content;
+		document.querySelector("#about").href = contentData.contents[1].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[1].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "C형 간염 최근 확진자 수";
 	}
 	else if (id === "RespiratoryInfections"){
@@ -75,8 +75,8 @@ function makeCharts(id){
 			year.push(data.RespiratoryInfections[i].year);
 			num.push(data.RespiratoryInfections[i].num);
 		}
-		document.querySelector("#about").href = contentData.respiratory_infectionsContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.respiratory_infectionsContent[0].content;
+		document.querySelector("#about").href = contentData.contents[2].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[2].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "급성 호흡기 감염증 최근 확진자 수";
 	}
 	else if (id === "SexInfectiousDisease"){
@@ -84,8 +84,8 @@ function makeCharts(id){
 			year.push(data.SexInfectiousDisease[i].year);
 			num.push(data.SexInfectiousDisease[i].num);
 		}
-		document.querySelector("#about").href = contentData.sex_infectious_diseaseContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.sex_infectious_diseaseContent[0].content;
+		document.querySelector("#about").href = contentData.contents[3].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[3].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "성매개 감염병 최근 확진자 수";
 	}
 	else if (id === "EnteroInfections"){
@@ -93,8 +93,8 @@ function makeCharts(id){
 			year.push(data.EnteroInfections[i].year);
 			num.push(data.EnteroInfections[i].num);
 		}
-		document.querySelector("#about").href = contentData.entero_infectionsContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.entero_infectionsContent[0].content;
+		document.querySelector("#about").href = contentData.contents[4].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[4].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "엔테로 바이러스감염증 최근 확진자 수";
 	}
 	else if (id === "Influenza"){
@@ -102,8 +102,8 @@ function makeCharts(id){
 			year.push(data.Influenza[i].year);
 			num.push(data.Influenza[i].num);
 		}
-		document.querySelector("#about").href = contentData.influenzaContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.influenzaContent[0].content;
+		document.querySelector("#about").href = contentData.contents[5].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[5].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "인플루엔자 최근 확진자 수";
 	}
 	else if (id === "IntestinalInfections"){
@@ -111,8 +111,8 @@ function makeCharts(id){
 			year.push(data.IntestinalInfections[i].year);
 			num.push(data.IntestinalInfections[i].num);
 		}
-		document.querySelector("#about").href = contentData.intestinal_infectionsContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.intestinal_infectionsContent[0].content;
+		document.querySelector("#about").href = contentData.contents[6].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[6].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "장관 감염증 최근 확진자 수";
 	}
 	else if (id === "HFMDisease"){
@@ -120,8 +120,8 @@ function makeCharts(id){
 			year.push(data.HFMDisease[i].year);
 			num.push(data.HFMDisease[i].num);
 		}
-		document.querySelector("#about").href = contentData.hand_foot_and_mouth_diseaseContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.hand_foot_and_mouth_diseaseContent[0].content;
+		document.querySelector("#about").href = contentData.contents[7].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[7].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "합병증동반 수족구병 최근 확진자 수";
 	}
 	else if (id === "ParasiteInfectionsAbroad"){
@@ -129,8 +129,8 @@ function makeCharts(id){
 			year.push(data.ParasiteInfectionsAbroad[i].year);
 			num.push(data.ParasiteInfectionsAbroad[i].num);
 		}
-		document.querySelector("#about").href = contentData.parasite_infections_abroadContent[0].url;
-		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.parasite_infections_abroadContent[0].content;
+		document.querySelector("#about").href = contentData.contents[8].aboutUrl;
+		document.querySelector(".col-xl-4.col-lg-5").querySelector(".card.shadow.mb-4").querySelector(".card-body").querySelector("#info").innerText = contentData.contents[8].content;
 		document.querySelector(".m-0.font-weight-bold.text-primary").innerText = "해외 유입 기생충 감염증 최근 확진자 수";
 	}
 	
@@ -227,17 +227,20 @@ function makeCharts(id){
 	});
 	
 }
-function crawlingWait(){
+//정보를 크롤링으로 받아왔을때 이 부분을 사용. 지금은 데이터베이스에 저장하였으므로 사용x
+/*function crawlingWait(){
 	setTimeout(function() {
 		if(!contentData === false){
-			sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");		
+			sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");	
 		}
 		else crawlingWait();
 	}, 500);
-}
-
+} 
 crawlingWait();
-sendAjax("http://localhost:8080/connect/api/diseaseInfocrawling", "crawling");
+*/
+
+sendAjax("http://localhost:8080/connect/api/showCharts", "ParasiteInfection");
+sendAjax("http://localhost:8080/connect/api/charts_content", "content");
 
 let selectChart = document.querySelector(".dropdown-menu.dropdown-menu-right.shadow.animated--fade-in");
 selectChart.addEventListener("click", (evt) => {

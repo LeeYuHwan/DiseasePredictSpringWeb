@@ -70,11 +70,11 @@ function makeCovidInfo(data){ //UTC시간 KST로 변경
 	myPieChart = new Chart(ctx, {
 	  type: 'doughnut',
 	  data: {
-	    labels: ["확진환자", "검사중", "격리해제"],
+	    labels: ["확진환자", "검사중", "격리해제", "사망"],
 	    datasets: [{
-	      data: [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].checkingCounter, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered],
-	      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-	      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+	      data: [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].checkingCounter, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath],
+	      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#FE2E2E'],
+	      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#FE2E2E'],
 	      hoverBorderColor: "rgba(234, 236, 244, 1)",
 	    }],
 	  },
@@ -103,7 +103,7 @@ document.querySelector("#today").innerText = getTimeStamp(today);
 
 let update = document.querySelector("#covid_update");
 update.addEventListener("click", (evt) => {
-	myPieChart.destroy();
+	if(myPieChart != null) myPieChart.destroy();
 	document.querySelector("#update_form").submit();	
 });
 

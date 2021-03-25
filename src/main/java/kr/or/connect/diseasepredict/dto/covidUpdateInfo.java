@@ -9,6 +9,7 @@ public class covidUpdateInfo {
 	private int checkingCounter;
 	private int TotalCase;
 	private int TotalRecovered;
+	private int TotalDeath;	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss")
 	private Date updatedate;
 	public int getId() {
@@ -34,6 +35,12 @@ public class covidUpdateInfo {
 	}
 	public void setTotalRecovered(int totalRecovered) {
 		TotalRecovered = totalRecovered;
+	}
+	public int getTotalDeath() {
+		return TotalDeath;
+	}
+	public void setTotalDeath(int totalDeath) {
+		TotalDeath = totalDeath;
 	}
 	public Date getUpdatedate() {
 		return updatedate;
