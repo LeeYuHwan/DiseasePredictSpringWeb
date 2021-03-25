@@ -1,5 +1,6 @@
 package kr.or.connect.diseasepredict.dao;
 
+import static kr.or.connect.diseasepredict.dao.sqls.DISEASE_CONTENT;
 import static kr.or.connect.diseasepredict.dao.sqls.ENTERO_INFECTIONS_ALL;
 import static kr.or.connect.diseasepredict.dao.sqls.HEPATITIS_C_ALL;
 import static kr.or.connect.diseasepredict.dao.sqls.HFM_DISEASE_ALL;
@@ -21,6 +22,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import kr.or.connect.diseasepredict.dto.diseaseContent;
 import kr.or.connect.diseasepredict.dto.showCharts;
 
 @Repository
@@ -28,6 +30,7 @@ public class showChartsInfectiousDiseaseDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<showCharts> rowMapper = BeanPropertyRowMapper.newInstance(showCharts.class);
+	private RowMapper<diseaseContent> contentRowMapper = BeanPropertyRowMapper.newInstance(diseaseContent.class);
 	
 	public showChartsInfectiousDiseaseDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -70,5 +73,9 @@ public class showChartsInfectiousDiseaseDao {
 	
 	public List<showCharts> respiratoryInfectionsAll(){			
 		return jdbc.query(RESPIRATORY_INFECTIONS_ALL, Collections.emptyMap(), rowMapper);		
+	}
+
+	public List<diseaseContent> contentAll(){			
+		return jdbc.query(DISEASE_CONTENT, Collections.emptyMap(), contentRowMapper);		
 	}	
 }

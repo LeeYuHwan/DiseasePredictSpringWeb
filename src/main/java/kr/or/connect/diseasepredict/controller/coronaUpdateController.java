@@ -43,15 +43,16 @@ public class coronaUpdateController {
 	    	covidUpdateInfos.setCheckingCounter(Integer.parseInt(data[0]));
 	    	covidUpdateInfos.setTotalCase(Integer.parseInt(data[1]));
 	    	covidUpdateInfos.setTotalRecovered(Integer.parseInt(data[2]));
+	    	covidUpdateInfos.setTotalDeath(Integer.parseInt(data[3]));
 	    	Long num = covidService.covidUpdateInfoInsert(covidUpdateInfos);
 	    	System.out.println("지금까지 " + num + "개의 날짜와 확진자 정보 업데이트 되었습니다.");
 	    	
 	    	covidCityRank covidCityRanks = new covidCityRank();
-	    	covidCityRanks.setN1(data[3]);
-	    	covidCityRanks.setN2(data[4]);
-	    	covidCityRanks.setN3(data[5]);
-	    	covidCityRanks.setN4(data[6]);
-	    	covidCityRanks.setN5(data[7]);
+	    	covidCityRanks.setN1(data[4]);
+	    	covidCityRanks.setN2(data[5]);
+	    	covidCityRanks.setN3(data[6]);
+	    	covidCityRanks.setN4(data[7]);
+	    	covidCityRanks.setN5(data[8]);
 	    	Long num2 = covidService.covidCityRankInsert(covidCityRanks);
 	    	System.out.println("지금까지 " + num2 + "개의 도시 순위 정보 업데이트 되었습니다.");
 	    }

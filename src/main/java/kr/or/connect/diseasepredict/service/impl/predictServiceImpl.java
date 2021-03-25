@@ -12,6 +12,7 @@ import kr.or.connect.diseasepredict.dao.selectiveCareCenterDao;
 import kr.or.connect.diseasepredict.dao.showChartsInfectiousDiseaseDao;
 import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
+import kr.or.connect.diseasepredict.dto.diseaseContent;
 import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
 import kr.or.connect.diseasepredict.service.predictService;
@@ -78,6 +79,12 @@ public class predictServiceImpl implements predictService{
 		List<showCharts> list = showChartsDao.respiratoryInfectionsAll();
 		return list;
 	}
+	
+	@Override
+	public List<diseaseContent> contentAll() {
+		List<diseaseContent> list = showChartsDao.contentAll();
+		return list;
+	}
 
 	@Override
 	public List<selectiveCareCenter> getSelectiveCareCenterAll() {
@@ -110,5 +117,5 @@ public class predictServiceImpl implements predictService{
 	public Long covidCityRankInsert(covidCityRank covidCityRanks) {
 		Long num = covidUpdateDao.covidCityRankInsert(covidCityRanks);
 		return num;
-	}	
+	}		
 }
