@@ -228,8 +228,8 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">코로나 SEIR 모델</h1>
-                        <form action="covid_update" method="post" id="update_form">
-                        	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="covid_update"> 최신정보로 업데이트</a>
+                        <form action="covid_update_korea" method="post" id="update_form">
+                        	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="covid_update"> 최신정보로 업데이트(한국)</a>
                         </form>
                     </div>
 
@@ -289,16 +289,16 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">SEIR_Graph</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary" id = "predictGraph">SEIR_Graph</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" id="selectCountry" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">나라를 선택하세요:</div>
-                                            <a class="dropdown-item" href="#">한국</a>
-                                            <a class="dropdown-item" href="#">미국</a>
-                                            <a class="dropdown-item" href="#">일본</a>                                        
+                                            <a class="dropdown-item" id="selectKorea" href="#">한국</a>
+                                            <a class="dropdown-item" id="selectAmerica" href="#">미국</a>
+                                            <a class="dropdown-item" id="selectJapan" href="#">일본</a>                                        
                                         </div>
                                     </div>                                  
                                 </div>
@@ -452,6 +452,6 @@
     <script src="http://localhost:8080/connect/resources/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->   
-    <script src="http://localhost:8080/connect/resources/js/demo/chart-pie-demo.js?ver=1"></script>
+    <script src="http://localhost:8080/connect/resources/js/demo/chart-pie-demo.js?ver=2"></script>
     </body>
 </html>

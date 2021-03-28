@@ -1,13 +1,12 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
-
 let myPieChart;
-function sendAjax(url, sw) {
+function sendAjax(url, sw, country) {
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", () => {
         let data = JSON.parse(oReq.responseText);
-        if(sw === 1) makeCovidInfo(data);
+        if(sw === 1) makeCovidInfo(data, country);
         else if(sw === 2) makeCityRanks(data);
     });
     oReq.open("GET", url);
@@ -58,7 +57,7 @@ function getTimeStamp(d) {
 	  return zero + n;
 	}
 
-function makeCovidInfo(data){ //UTC시간 KST로 변경
+function makeCovidInfo(data, country){ //UTC시간 KST로 변경
 	let timeSource = data.covidUpdateInfos[data.covidUpdateInfos.length - 1].updatedate;
 	let dateObj = new Date(timeSource);
 	dateObj.setHours(dateObj.getHours() + 9);
@@ -66,15 +65,28 @@ function makeCovidInfo(data){ //UTC시간 KST로 변경
 	document.querySelector("#update_date").innerText = krTime;
 		
 	// Pie Chart Example
+	let labelData = [];
+	let infoData = [];
+	let color = [];
+	if(country === "korea") {
+		labelData = ["확진환자", "검사중", "격리해제", "사망"];
+		infoData = [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].checkingCounter, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath];
+		color = ['#4e73df', '#1cc88a', '#36b9cc', '#FE2E2E'];
+	}
+	else if(country === "japan") {
+		labelData = ["확진환자",  "격리해제", "사망"];
+		infoData = [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath];
+		color = ['#4e73df', '#36b9cc', '#FE2E2E'];
+	}
 	let ctx = document.getElementById("myPieChart");
 	myPieChart = new Chart(ctx, {
 	  type: 'doughnut',
 	  data: {
-	    labels: ["확진환자", "검사중", "격리해제", "사망"],
+	    labels: labelData,
 	    datasets: [{
-	      data: [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].checkingCounter, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath],
-	      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#FE2E2E'],
-	      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#FE2E2E'],
+	      data: infoData,
+	      backgroundColor: color,
+	      hoverBackgroundColor: color,
 	      hoverBorderColor: "rgba(234, 236, 244, 1)",
 	    }],
 	  },
@@ -107,5 +119,28 @@ update.addEventListener("click", (evt) => {
 	document.querySelector("#update_form").submit();	
 });
 
-sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1);
+let selectCountry = document.querySelector("#selectCountry");
+selectCountry.addEventListener("click", (evt) => {
+	if(evt.target.id === "selectKorea"){
+		console.log("selectKorea");
+		myPieChart.destroy();
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1);
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info/city_rank", 2, "korea");
+		document.querySelector("#update_form").action = "covid_update_korea";
+		document.querySelector("#covid_update").innerText = "최신정보로 업데이트(한국)";
+		document.querySelector("#predictGraph").innerText = "한국 코로나 SEIR그래프";
+		document.querySelector(".seirImg").src = "http://localhost:8080/connect/resources/seir_model/sin.png";
+	}	
+	else if(evt.target.id === "selectJapan"){
+		console.log("selectJapan");
+		myPieChart.destroy();
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info/japan", 1, "japan");
+		document.querySelector("#update_form").action = "covid_update_japan";
+		document.querySelector("#covid_update").innerText = "최신정보로 업데이트(일본)";
+		document.querySelector("#predictGraph").innerText = "일본 코로나 SIR그래프";
+		document.querySelector(".seirImg").src = "http://localhost:8080/connect/resources/seir_model/japan_sir.png";
+	}	
+});
+
+sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1, "korea");
 sendAjax("http://localhost:8080/connect/api/covid_update_Info/city_rank", 2);

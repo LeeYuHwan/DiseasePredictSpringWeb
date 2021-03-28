@@ -5,9 +5,6 @@ from flask import Flask
 
 import scipy.integrate
 import numpy
-import matplotlib.pyplot as plt
-from urllib.request import urlopen
-
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -100,9 +97,13 @@ def getSIRCoronaData():
 
         I0num = re.findall("\d+", I0Data)
         R0num = re.findall("\d+", R0Data)
-
+        
+        death = str(soup.select_one('#counters > div:nth-child(2) > div > span'))
+        death = re.findall("\d+", death)
+        
         japanCovidData.append(I0num[0])
         japanCovidData.append(R0num[0])
+        japanCovidData.append(death[0])
     else : 
         print(response.status_code)
         
@@ -117,6 +118,7 @@ def SIR_model(y, t, beta, gamma):
 
 #Initial conditions
 def SIR_diagram():
+    import matplotlib.pyplot as plt
     getSIRCoronaData()
     I0 = int(japanCovidData[0])
     R0 = int(japanCovidData[1])
@@ -162,8 +164,12 @@ def runSEIRServer():
  
 @app.route('/sir_japan')
 def runSIRServer():
+    japanCovidData.clear()
     SIR_diagram()
-    return "SIR Server Run..."
+    valueStr = ""
+    for i in japanCovidData:
+        valueStr += i + " "
+    return valueStr
         
 if __name__ == "__main__":
     app.run()
