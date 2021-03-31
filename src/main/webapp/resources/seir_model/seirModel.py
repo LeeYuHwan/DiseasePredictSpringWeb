@@ -133,7 +133,7 @@ def SIR_diagram():
     gamma = 1/14
     
     #Time vector
-    t = numpy.linspace(0, 100, 10000)
+    t = numpy.linspace(0, 200, 10000)
     
     #Result
     solution = scipy.integrate.odeint(SIR_model, [S0, I0, R0], t, args=(beta, gamma))

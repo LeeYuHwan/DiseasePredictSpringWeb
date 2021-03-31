@@ -124,8 +124,8 @@ selectCountry.addEventListener("click", (evt) => {
 	if(evt.target.id === "selectKorea"){
 		console.log("selectKorea");
 		myPieChart.destroy();
-		sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1);
-		sendAjax("http://localhost:8080/connect/api/covid_update_Info/city_rank", 2, "korea");
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1, "korea");
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info/city_rank", 2);
 		document.querySelector("#update_form").action = "covid_update_korea";
 		document.querySelector("#covid_update").innerText = "최신정보로 업데이트(한국)";
 		document.querySelector("#predictGraph").innerText = "한국 코로나 SEIR그래프";
