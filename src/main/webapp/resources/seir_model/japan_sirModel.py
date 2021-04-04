@@ -12,9 +12,9 @@ japanCovidData = [];
 
 def getCoronaData():
 	
-    url = 'https://www.okinawaobaksa.com/corona19/'
+    japanUrl = 'https://www.okinawaobaksa.com/corona19/'
 
-    response = requests.get(url)
+    response = requests.get(japanUrl)
 
     if response.status_code == 200:
         html = response.text
