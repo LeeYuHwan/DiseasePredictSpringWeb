@@ -81,15 +81,24 @@ def simulation1():
 
 
 #여기부터 SIR모델 (현재 일본 코로나 종식일 구현)        
-japanCovidData = [];
+SIRCovidData = [];
 
-def getSIRCoronaData():
+def getSIRCoronaData(sw):
 	
-    url = 'https://www.okinawaobaksa.com/corona19/'
+    url = ""
+    I0Data = ""
+    R0Data = ""
+    death = ""
+    if sw == "us":
+        url = "https://coronaboard.com/"    
+    else:
+        url = 'https://www.okinawaobaksa.com/corona19/'
+    
 
     response = requests.get(url)
-
-    if response.status_code == 200:
+    #responseJson.get("checkingCounter").replace(",","")
+    
+    if response.status_code == 200 and sw == "japan":
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
         I0Data = str(soup.select_one('#counters > div:nth-child(1) > div > span'))
@@ -101,9 +110,26 @@ def getSIRCoronaData():
         death = str(soup.select_one('#counters > div:nth-child(2) > div > span'))
         death = re.findall("\d+", death)
         
-        japanCovidData.append(I0num[0])
-        japanCovidData.append(R0num[0])
-        japanCovidData.append(death[0])
+        SIRCovidData.append(I0num[0])
+        SIRCovidData.append(R0num[0])
+        SIRCovidData.append(death[0])
+    elif response.status_code == 200 and sw == "us":
+        from selenium import webdriver
+        driver = webdriver.Chrome('C:\chromedriver_win32\chromedriver')
+        driver.get(url)
+        html = driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+        #html = response.text
+        #soup = BeautifulSoup(html, 'html.parser')
+        I0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(1) > p.confirmed.number').text)
+        R0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(2) > p.death.red.number').text)
+        death = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(3) > p.released.number').text)
+        print(I0Data.replace(",",""))
+        print(R0Data.replace(",",""))
+        print(death.replace(",",""))
+        SIRCovidData.append(I0Data.replace(",",""))
+        SIRCovidData.append(R0Data.replace(",",""))
+        SIRCovidData.append(death.replace(",",""))
     else : 
         print(response.status_code)
         
@@ -117,11 +143,11 @@ def SIR_model(y, t, beta, gamma):
     return([dS_dt, dI_dt, dR_dt])
 
 #Initial conditions
-def SIR_diagram():
+def SIR_diagram(sw):
     import matplotlib.pyplot as plt
-    getSIRCoronaData()
-    I0 = int(japanCovidData[0])
-    R0 = int(japanCovidData[1])
+    getSIRCoronaData(sw)
+    I0 = int(SIRCovidData[0])
+    R0 = int(SIRCovidData[1])
     S0 = 126050796 - I0 - R0 #네이버 일본 인구수 기준 126050796명
     
     N = S0 + I0 + R0
@@ -163,11 +189,20 @@ def runSEIRServer():
     return valueStr
  
 @app.route('/sir_japan')
-def runSIRServer():
-    japanCovidData.clear()
-    SIR_diagram()
+def runSIRJpanServer():
+    SIRCovidData.clear()
+    SIR_diagram("japan")
     valueStr = ""
-    for i in japanCovidData:
+    for i in SIRCovidData:
+        valueStr += i + " "
+    return valueStr
+
+@app.route('/sir_us')
+def runSIRUSServer():
+    SIRCovidData.clear()
+    SIR_diagram("us")
+    valueStr = ""
+    for i in SIRCovidData:
         valueStr += i + " "
     return valueStr
         

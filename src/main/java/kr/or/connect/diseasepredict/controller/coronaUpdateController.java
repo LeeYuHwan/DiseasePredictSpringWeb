@@ -88,4 +88,5 @@ public class coronaUpdateController {
 	    
 		return "covid19.html";
 	}
+	//http://127.0.0.1:5000/sir_us 추가해야할것
 }
