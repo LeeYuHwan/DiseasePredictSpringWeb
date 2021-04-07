@@ -116,14 +116,15 @@ def getSIRCoronaData(sw):
     elif response.status_code == 200 and sw == "us":
         from selenium import webdriver
         driver = webdriver.Chrome('C:\chromedriver_win32\chromedriver')
+        driver.implicitly_wait(10)
         driver.get(url)
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
         #html = response.text
         #soup = BeautifulSoup(html, 'html.parser')
         I0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(1) > p.confirmed.number').text)
-        R0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(2) > p.death.red.number').text)
-        death = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(3) > p.released.number').text)
+        R0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(3) > p.released.number').text)
+        death = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(2) > p.death.red.number').text)
         print(I0Data.replace(",",""))
         print(R0Data.replace(",",""))
         print(death.replace(",",""))
@@ -174,10 +175,14 @@ def SIR_diagram(sw):
     plt.legend()
     plt.xlabel("Time")
     plt.ylabel("Proportions")
-    plt.title("Japan SIR model")
-    plt.savefig('./japan_sir.png') 
     
-    
+    if sw == "japan":
+        plt.title("Japan SIR model")
+        plt.savefig('./japan_sir.png')
+    elif sw == "us":
+        plt.title("America SIR model")
+        plt.savefig('./us_sir.png')
+           
 app = Flask (__name__)
  
 @app.route('/seir')

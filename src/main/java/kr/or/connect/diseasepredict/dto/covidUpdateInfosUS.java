@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class covidUpdateInfosJapan {
+public class covidUpdateInfosUS {
 	private int id;
 	private int totalCase;
 	private int totalRecovered;
@@ -40,5 +40,5 @@ public class covidUpdateInfosJapan {
 	}
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
-	}	
+	}
 }

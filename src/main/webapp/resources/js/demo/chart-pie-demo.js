@@ -2,6 +2,7 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 let myPieChart;
+
 function sendAjax(url, sw, country) {
     let oReq = new XMLHttpRequest();
     oReq.addEventListener("load", () => {
@@ -73,7 +74,7 @@ function makeCovidInfo(data, country){ //UTC시간 KST로 변경
 		infoData = [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].checkingCounter, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath];
 		color = ['#4e73df', '#1cc88a', '#36b9cc', '#FE2E2E'];
 	}
-	else if(country === "japan") {
+	else if(country === "japan" || country === "america") {
 		labelData = ["확진환자",  "격리해제", "사망"];
 		infoData = [data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalCase, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalRecovered, data.covidUpdateInfos[data.covidUpdateInfos.length - 1].totalDeath];
 		color = ['#4e73df', '#36b9cc', '#FE2E2E'];
@@ -140,6 +141,16 @@ selectCountry.addEventListener("click", (evt) => {
 		document.querySelector("#predictGraph").innerText = "일본 코로나 SIR그래프";
 		document.querySelector(".seirImg").src = "http://localhost:8080/connect/resources/seir_model/japan_sir.png";
 	}	
+	else if(evt.target.id === "selectAmerica"){
+		console.log("selectAmerica");
+		myPieChart.destroy();
+		sendAjax("http://localhost:8080/connect/api/covid_update_Info/america", 1, "america");
+		document.querySelector("#update_form").action = "covid_update_us";
+		document.querySelector("#covid_update").innerText = "최신정보로 업데이트(미국)";
+		document.querySelector("#predictGraph").innerText = "미국 코로나 SIR그래프";
+		document.querySelector(".seirImg").src = "http://localhost:8080/connect/resources/seir_model/us_sir.png";
+	}
+	
 });
 
 sendAjax("http://localhost:8080/connect/api/covid_update_Info", 1, "korea");
