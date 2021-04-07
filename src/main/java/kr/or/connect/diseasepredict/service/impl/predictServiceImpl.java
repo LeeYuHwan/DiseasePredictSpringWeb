@@ -13,6 +13,7 @@ import kr.or.connect.diseasepredict.dao.showChartsInfectiousDiseaseDao;
 import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfosJapan;
+import kr.or.connect.diseasepredict.dto.covidUpdateInfosUS;
 import kr.or.connect.diseasepredict.dto.diseaseContent;
 import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
@@ -103,7 +104,13 @@ public class predictServiceImpl implements predictService{
 	public List<covidUpdateInfosJapan> covidUpdateInfoJapanAll() {
 		List<covidUpdateInfosJapan> list = covidUpdateDao.covidUpdateInfoJapanAll();
 		return list;
-	}	
+	}
+	
+	@Override
+	public List<covidUpdateInfosUS> covidUpdateInfoUSAll() {
+		List<covidUpdateInfosUS> list = covidUpdateDao.covidUpdateInfoUSAll();
+		return list;
+	}
 	
 	@Override
 	public List<covidCityRank> covidCityRankAll() {
@@ -129,8 +136,16 @@ public class predictServiceImpl implements predictService{
 	
 	@Override
 	@Transactional(readOnly = false)
+	public Long covidUpdateInfosUSInsert(covidUpdateInfosUS covidUpdateInfos) {
+		covidUpdateInfos.setUpdatedate(new Date());
+		Long num = covidUpdateDao.covidUpdateInfosUSInsert(covidUpdateInfos);
+		return num;
+	}
+	
+	@Override
+	@Transactional(readOnly = false)
 	public Long covidCityRankInsert(covidCityRank covidCityRanks) {
 		Long num = covidUpdateDao.covidCityRankInsert(covidCityRanks);
 		return num;
-	}			
+	}				
 }

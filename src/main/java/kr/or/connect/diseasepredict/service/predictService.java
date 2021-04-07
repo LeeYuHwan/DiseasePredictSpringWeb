@@ -5,6 +5,7 @@ import java.util.List;
 import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfosJapan;
+import kr.or.connect.diseasepredict.dto.covidUpdateInfosUS;
 import kr.or.connect.diseasepredict.dto.diseaseContent;
 import kr.or.connect.diseasepredict.dto.selectiveCareCenter;
 import kr.or.connect.diseasepredict.dto.showCharts;
@@ -23,8 +24,10 @@ public interface predictService {
 	public List<selectiveCareCenter> getSelectiveCareCenterAll();
 	public List<covidUpdateInfo> covidUpdateInfoAll();
 	public List<covidUpdateInfosJapan> covidUpdateInfoJapanAll();
+	public List<covidUpdateInfosUS> covidUpdateInfoUSAll();
 	public List<covidCityRank> covidCityRankAll();
 	public Long covidUpdateInfoInsert(covidUpdateInfo covidUpdateInfos);
 	public Long covidUpdateInfosJapanInsert(covidUpdateInfosJapan covidUpdateInfos);
+	public Long covidUpdateInfosUSInsert(covidUpdateInfosUS covidUpdateInfos);
 	public Long covidCityRankInsert(covidCityRank covidCityRanks);
 }

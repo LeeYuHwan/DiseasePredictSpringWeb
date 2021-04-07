@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfosJapan;
+import kr.or.connect.diseasepredict.dto.covidUpdateInfosUS;
 import kr.or.connect.diseasepredict.service.predictService;
 
 @Controller
@@ -88,5 +89,33 @@ public class coronaUpdateController {
 	    
 		return "covid19.html";
 	}
-	//http://127.0.0.1:5000/sir_us 추가해야할것
+	
+	@PostMapping(path="/covid_update_us")
+	public String writeAmerica(HttpServletRequest request) {
+		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+	    converters.add(new FormHttpMessageConverter());
+	    converters.add(new StringHttpMessageConverter());
+	 
+	    RestTemplate restTemplate = new RestTemplate();
+	    restTemplate.setMessageConverters(converters);
+	 
+	    // REST API 호출
+	    String result = "";
+	    result = restTemplate.getForObject("http://127.0.0.1:5000/sir_us", String.class);
+	    System.out.println("------------------ 호출 결과 ------------------");
+	    System.out.println(result);
+
+	    if(result != "") {
+	    	covidUpdateInfosUS covidUpdateInfos = new covidUpdateInfosUS();
+	    	String data[] = result.split(" ");
+	    	covidUpdateInfos.setTotalCase(Integer.parseInt(data[0]));
+	    	covidUpdateInfos.setTotalRecovered(Integer.parseInt(data[1]));
+	    	covidUpdateInfos.setTotalDeath(Integer.parseInt(data[2]));
+	    	Long num = covidService.covidUpdateInfosUSInsert(covidUpdateInfos);
+	    	System.out.println("지금까지 " + num + "개의 날짜와 확진자 정보 업데이트 되었습니다.");
+	    }
+	    
+		return "covid19.html";
+	}
+
 }

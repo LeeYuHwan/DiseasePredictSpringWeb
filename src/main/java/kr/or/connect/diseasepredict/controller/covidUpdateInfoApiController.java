@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.connect.diseasepredict.dto.covidCityRank;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfo;
 import kr.or.connect.diseasepredict.dto.covidUpdateInfosJapan;
+import kr.or.connect.diseasepredict.dto.covidUpdateInfosUS;
 import kr.or.connect.diseasepredict.service.predictService;
 
 @RestController
@@ -24,6 +25,17 @@ public class covidUpdateInfoApiController {
 	public Map<String, Object> covidUpdateInfo(){	
 		List<covidUpdateInfo> covidUpdateInfos = covidService.covidUpdateInfoAll();
 				
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("covidUpdateInfos", covidUpdateInfos);	
+		
+		return map;
+	}
+	
+	@GetMapping("/america")
+	public Map<String, Object> covidUpdateInfoAmerica(){	
+		List<covidUpdateInfosUS> covidUpdateInfos = covidService.covidUpdateInfoUSAll();
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("covidUpdateInfos", covidUpdateInfos);	
