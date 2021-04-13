@@ -115,7 +115,10 @@ def getSIRCoronaData(sw):
         SIRCovidData.append(death[0])
     elif response.status_code == 200 and sw == "us":
         from selenium import webdriver
-        driver = webdriver.Chrome('C:\chromedriver_win32\chromedriver')
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        
+        driver = webdriver.Chrome('C:\chromedriver_win32\chromedriver', chrome_options=options)
         driver.implicitly_wait(10)
         driver.get(url)
         html = driver.page_source
