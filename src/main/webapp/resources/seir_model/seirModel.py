@@ -114,7 +114,20 @@ def getSIRCoronaData(sw):
         SIRCovidData.append(R0num[0])
         SIRCovidData.append(death[0])
     elif response.status_code == 200 and sw == "us":
-        from selenium import webdriver
+     
+        url = 'https://www.worldometers.info/coronavirus/country/us/'
+        response = requests.get(url)
+        
+        soup = BeautifulSoup(response.text, "html.parser").find_all("div","maincounter-number")
+        
+        tmpData = []
+        for i in enumerate(soup[0:3]):
+            tmpData.append(i[1].find('span').get_text())
+                     
+        SIRCovidData.append(tmpData[0].replace(",","").rstrip())
+        SIRCovidData.append(tmpData[2].replace(",",""))
+        SIRCovidData.append(tmpData[1].replace(",",""))
+        '''from selenium import webdriver
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
         
@@ -123,17 +136,12 @@ def getSIRCoronaData(sw):
         driver.get(url)
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
-        #html = response.text
-        #soup = BeautifulSoup(html, 'html.parser')
+        html = response.text
+        soup = BeautifulSoup(html, 'html.parser')
         I0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(1) > p.confirmed.number').text)
         R0Data = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(3) > p.released.number').text)
-        death = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(2) > p.death.red.number').text)
-        print(I0Data.replace(",",""))
-        print(R0Data.replace(",",""))
-        print(death.replace(",",""))
-        SIRCovidData.append(I0Data.replace(",",""))
-        SIRCovidData.append(R0Data.replace(",",""))
-        SIRCovidData.append(death.replace(",",""))
+        death = str(soup.select_one('#top > div.top.container > div.row.dashboard.domestic.justify-content-around > div:nth-child(2) > p.death.red.number').text)'''
+               
     else : 
         print(response.status_code)
         
@@ -152,8 +160,12 @@ def SIR_diagram(sw):
     getSIRCoronaData(sw)
     I0 = int(SIRCovidData[0])
     R0 = int(SIRCovidData[1])
-    S0 = 126050796 - I0 - R0 #네이버 일본 인구수 기준 126050796명
-    
+    S0 = 0
+    if sw == "japan":
+        S0 = 126050796 - I0 - R0 #네이버 일본 인구수 기준 126050796명
+    elif sw == "us":
+        S0 = 330612170 - I0 - R0 #네이버 미국 인구수 기준 330612170명
+       
     N = S0 + I0 + R0
     
     S0 /= N
