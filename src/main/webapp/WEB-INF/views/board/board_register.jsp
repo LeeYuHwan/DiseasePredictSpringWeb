@@ -21,18 +21,22 @@
 					<form role="form" action="board_register_add" method="post">
         				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>  
 						<div class="form-group">
-							<label>Title</label>
+							<label>제목</label>
 							<input class="form-control" name='title'>
 						</div>
 						
 						<div class="form-group">
-							<label>Text area</label>
-							<textarea class="form-control" rows="3" name='content'></textarea>
+							<label>내용</label>
+							<textarea class="form-control" rows="4" name='content'></textarea>
 						</div>
 						
 						<div class="form-group">
-							<label>Writer</label>
-							<input class="form-control" name='writer' value='testWriter' readonly="readonly">	
+							<label>작성자</label>
+							<textarea class="form-control" rows="1" name='writer'></textarea>	
+						</div>
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" id="password" name="password" maxlength="12">          	
 						</div>
 						<button type="submit" class="btn btn-default">Submit Button</button>
 						<button type="reset" class="btn btn-default">Reset Button</button>

@@ -2,6 +2,8 @@ package kr.or.connect.diseasepredict.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.connect.diseasepredict.board.dto.BoardVO;
 import kr.or.connect.diseasepredict.service.BoardService;
+import kr.or.connect.diseasepredict.service.EncryptHelper;
 
 @Controller
 public class BoardController 
 {
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private EncryptHelper encryptHelper;
 	
 	@GetMapping("/board_list")
 	public String list(Model model)
@@ -80,12 +85,44 @@ public class BoardController
 	//@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
-	}*/
+	}*/	
+	private String getIp(HttpServletRequest request) {
+		 
+        String ip = request.getHeader("X-Forwarded-For");
+ 
+ 
+        if (ip == null) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null) {
+            ip = request.getHeader("WL-Proxy-Client-IP"); // 웹로직
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+         
+        return ip;
+    }
 	
 	@PostMapping("/board_register_add")
-	//@PreAuthorize("isAuthenticated()")
-	public String register(@ModelAttribute BoardVO boardVO, Model model)
+	public String register(@ModelAttribute BoardVO boardVO, Model model, HttpServletRequest req)
 	{
+		String passwd = encryptHelper.encrypt(boardVO.getPasswd());
+		boardVO.setPasswd(passwd);	
+		String ip = getIp(req);
+		boardVO.setIp(ip);
+		
+		//System.out.println(ip);
+		//System.out.println(passwd);
+		//System.out.println(boardVO.getIp());
+		//System.out.println(boardVO.getPasswd());
+		
 		service.insert(boardVO);	
 		return "redirect:board_list";
 	}

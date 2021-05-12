@@ -26,32 +26,32 @@
 						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
 						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 						<div class="form-group">
-							<label>Bno</label>
+							<label>번호</label>
 							<input class="form-control" name='bno' value='<c:out value="${board.bno }"/>' >
 						</div>
 						
 						<div class="form-group">
-							<label>Title</label>
+							<label>제목</label>
 							<input class="form-control" name='title' value='<c:out value="${board.title }"/>' >
 						</div>
 						
 						<div class="form-group">
-							<label>Text area</label>
-							<textarea class="form-control" rows="3" name='content' ><c:out value="${board.content }"/></textarea>
+							<label>내용</label>
+							<textarea class="form-control" rows="4" name='content' ><c:out value="${board.content }"/></textarea>
 						</div>
 						
 						<div class="form-group">
-							<label>Writer</label>
+							<label>작성자</label>
 							<input class="form-control" name='writer' value='<c:out value="${board.writer }"/>' readonly="readonly">
 						</div>
 						
 						<div class="form-group">
-							<label>RegDate</label>
+							<label>작성일</label>
 							<input class="form-control" name='regDate' value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate }"/>' readonly="readonly">
 						</div>
 						
 						<div class="form-group">
-							<label>Update Date</label>
+							<label>수정일</label>
 							<input class="form-control" name='updateDate'value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate }"/>' readonly="readonly">
 						</div>
 						
