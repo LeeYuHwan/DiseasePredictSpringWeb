@@ -38,7 +38,7 @@ public class BoardDao {
 	public BoardDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("tbl_board")
+				.withTableName("new_tbl_board")
 				.usingGeneratedKeyColumns("bno");
 	}
 	

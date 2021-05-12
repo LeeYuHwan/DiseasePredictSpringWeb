@@ -11,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import kr.or.connect.diseasepredict.service.EncryptHelper;
+import kr.or.connect.diseasepredict.service.impl.BCryptImpl;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "kr.or.connect.diseasepredict.controller" })
@@ -48,4 +51,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
         multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
         return multipartResolver;
     }
+    
+    @Bean
+    public EncryptHelper encryptConfigure() { return new BCryptImpl(); }
 }
