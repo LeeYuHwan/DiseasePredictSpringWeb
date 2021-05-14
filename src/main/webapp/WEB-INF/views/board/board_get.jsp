@@ -38,6 +38,7 @@
 							<label>작성자</label>
 							<input class="form-control" name='writer' value='<c:out value="${board.writer }"/>' readonly="readonly">
 						</div>
+												
 						<!--  <div class="form-group">
 							<label>작성자IP</label>
 							<input class="form-control" name='writer_ip' value='<c:out value="${board.writer }"/>' readonly="readonly">
@@ -48,14 +49,10 @@
 								<button data-oper='modify' class="btn btn-default">Modify</button>
 							</c:if>
 						</sec:authorize>
-						<button data-oper='list' class="btn btn-info">List</button>
-						
-						<form id='operForm' action="/board/modify" method="get">
+						<button data-oper='list' class="btn btn-info">목록</button>
+						<button data-oper='modify' class="btn btn-info updateBtn">수정</button>
+						<form id='operForm' action="loc_modify" method="get">
 							<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
-							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-							<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-							<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
-							<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 						</form>
 				</div>
 				<!--  end panel-body -->
@@ -190,9 +187,9 @@
 
 			var replyer = null;
 
-			<sec:authorize access="isAuthenticated()">
-				replyer ='<sec:authentication property="principal.username" />';	
-			</sec:authorize>
+			//<sec:authorize access="isAuthenticated()">
+				//replyer ='<sec:authentication property="principal.username" />';	
+			//</sec:authorize>
 
 			var csrfHeaderName = "${_csrf.headerName}";
 			var csrfTokenValue = "${_csrf.token}";
@@ -368,7 +365,7 @@
 		$(document).ready(function() {
 			var operForm = $("#operForm");
 			$("button[data-oper='modify']").on("click", function(e) {
-				operForm.attr("action", "board_modify").submit();
+				operForm.attr("action", "loc_modify").submit();
 			});
 			$("button[data-oper='list']").on("click", function(e) {
 				operForm.find("#bno").remove();

@@ -9,12 +9,11 @@ public class BoardVO
 	private String content;
 	private String writer;
 	private String passwd;
+	private String work;
 	private String ip;	
 	private Date regdate;
 	private Date updateDate;
-	
-	
-	
+			
 	public Long getBno() {
 		return bno;
 	}
@@ -44,6 +43,12 @@ public class BoardVO
 	}
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+	public String getWork() {
+		return work;
+	}
+	public void setWork(String work) {
+		this.work = work;
 	}
 	public String getIp() {
 		return ip;

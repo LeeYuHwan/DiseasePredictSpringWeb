@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.connect.diseasepredict.board.dto.BoardVO;
+import kr.or.connect.diseasepredict.board.dto.boardPasswdCheck;
 import kr.or.connect.diseasepredict.service.BoardService;
 import kr.or.connect.diseasepredict.service.EncryptHelper;
 
@@ -81,11 +82,6 @@ public class BoardController
 		return "/board/board_list.jsp";
 	}
 	
-	/*@GetMapping("/register")
-	//@PreAuthorize("isAuthenticated()")
-	public void register() {
-		
-	}*/	
 	private String getIp(HttpServletRequest request) {
 		 
         String ip = request.getHeader("X-Forwarded-For");
@@ -113,7 +109,9 @@ public class BoardController
 	@PostMapping("/board_register_add")
 	public String register(@ModelAttribute BoardVO boardVO, Model model, HttpServletRequest req)
 	{
+		//System.out.println(boardVO.getPasswd() + "end");
 		String passwd = encryptHelper.encrypt(boardVO.getPasswd());
+		//System.out.println(passwd);
 		boardVO.setPasswd(passwd);	
 		String ip = getIp(req);
 		boardVO.setIp(ip);
@@ -127,6 +125,31 @@ public class BoardController
 		return "redirect:board_list";
 	}
 	
+	@PostMapping("/board_passwd_check")
+	public String PasswdCheck(@ModelAttribute BoardVO boardVO) {
+		boardPasswdCheck CheckPasswd = service.GetHashedPassed(boardVO.getBno());
+		System.out.println(boardVO.getPasswd());
+		System.out.println(CheckPasswd.getPasswd());
+		boolean check = encryptHelper.isMatch(boardVO.getPasswd(), CheckPasswd.getPasswd());
+		System.out.println(check);
+		//System.out.println(boardPasswdcheck.getWork());
+		if(check == true) {
+			
+			if(boardVO.getWork().equals("delete")) {
+				System.out.println("delete 수행");
+				service.delete(boardVO.getBno());
+			}
+			else if (boardVO.getWork().equals("update")) {
+				System.out.println("update 수행");
+				service.update(boardVO, boardVO.getBno());
+			}
+		}
+		else {
+			System.out.println("비밀번호 불일치");
+		}
+		return "redirect:board_list";
+	}
+	
 	@GetMapping("/board_get")
 	public String get(@RequestParam("bno") Long bno, Model model)
 	{	
@@ -137,33 +160,17 @@ public class BoardController
 		
 		return "/board/board_get.jsp";
 	}
-	/*
-	//@PreAuthorize("principal.username == #board.writer")
-	@PostMapping("/modify")
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr)
+		
+
+	@GetMapping("/loc_modify")
+	public String modify(@RequestParam("bno") Long bno, Model model)
 	{
-		System.out.println("modify:" + board);
+		System.out.println(bno);
+		System.out.println("/modifyRead");
+		BoardVO readBoard = service.read(bno);		
+		model.addAttribute("board", readBoard);
 		
-		if (service.modify(board)) 
-		{
-			rttr.addFlashAttribute("result", "success");
-		}
-		
-		return "redirect:/board/list" + cri.getListLink();
+		return "/board/board_modify.jsp";
 	}
-	
-	//@PreAuthorize("principal.username == #writer")
-	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, String writer)
-	{
-		System.out.println("remove..." + bno);
-		
-		if (service.remove(bno))
-		{
-			rttr.addFlashAttribute("result", "success");
-		}
-		
-		return "redirect:/board/list" + cri.getListLink();
-	}*/
 	
 }

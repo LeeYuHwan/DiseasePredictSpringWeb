@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.diseasepredict.board.dto.BoardVO;
+import kr.or.connect.diseasepredict.board.dto.boardPasswdCheck;
 import kr.or.connect.diseasepredict.dao.BoardDao;
 import kr.or.connect.diseasepredict.service.BoardService;
 
@@ -28,6 +29,12 @@ public class BoardServiceImpl implements BoardService
 		BoardVO readBoard = boardDao.read(bno);
 		return readBoard;
 	}
+	
+	@Override
+	public boardPasswdCheck GetHashedPassed(Long bno) {
+		boardPasswdCheck boardPasswdcheck = boardDao.GetHashedPassed(bno);
+		return boardPasswdcheck;
+	}
 
 	@Override
 	@Transactional(readOnly = false)
@@ -39,6 +46,7 @@ public class BoardServiceImpl implements BoardService
 	@Override
 	@Transactional(readOnly = false)
 	public Long update(BoardVO boardVO, Long bno) {
+		boardVO.setUpdateDate(new Date());
 		boardDao.update(boardVO, bno);
 		return bno;
 	}
@@ -93,5 +101,6 @@ public class BoardServiceImpl implements BoardService
 	public List<BoardVO> getTitleContentWriter(String search) {
 		List<BoardVO> list = boardDao.getTitleContentWriter(search);
 		return list;
-	}	
+	}
+	
 }
