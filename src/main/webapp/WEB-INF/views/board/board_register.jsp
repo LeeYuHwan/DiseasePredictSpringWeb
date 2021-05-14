@@ -36,7 +36,7 @@
 						</div>
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input type="password" id="password" name="password" maxlength="12">          	
+							<input type="password" id="password" name="passwd" maxlength="12">          	
 						</div>
 						<button type="submit" class="btn btn-default">Submit Button</button>
 						<button type="reset" class="btn btn-default">Reset Button</button>

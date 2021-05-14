@@ -3,6 +3,7 @@ package kr.or.connect.diseasepredict.dao;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.DELETE;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_CONTENT;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_CONTENT_TITLE;
+import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_HASHED_PASSWD;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_LIST;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TITLE;
 import static kr.or.connect.diseasepredict.dao.BoardSqls.GET_TITLE_CONTENT_WRITER;
@@ -28,12 +29,14 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.diseasepredict.board.dto.BoardVO;
+import kr.or.connect.diseasepredict.board.dto.boardPasswdCheck;
 
 @Repository
 public class BoardDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<BoardVO> infoRowMapper = BeanPropertyRowMapper.newInstance(BoardVO.class);
+	private RowMapper<boardPasswdCheck> passwdCheckRowMapper = BeanPropertyRowMapper.newInstance(boardPasswdCheck.class);
 	
 	public BoardDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -60,6 +63,7 @@ public class BoardDao {
 		params.put("title", boardVO.getTitle());
 		params.put("content", boardVO.getContent());
 		params.put("writer", boardVO.getWriter());
+		params.put("sysdate",boardVO.getUpdateDate());
 		params.put("bno", bno);		
 		jdbc.update(UPDATE, params);
 		
@@ -102,6 +106,11 @@ public class BoardDao {
 	    params.put("content", "%" + search + "%");
 	    params.put("search", search);
 		return jdbc.query(GET_TITLE_CONTENT_WRITER, params, infoRowMapper);		
+	}
+	
+	public boardPasswdCheck GetHashedPassed(Long bno) {
+		Map<String, ?> params = Collections.singletonMap("bno", bno);
+		return jdbc.queryForObject(GET_HASHED_PASSWD, params, passwdCheckRowMapper);
 	}
 
 }
