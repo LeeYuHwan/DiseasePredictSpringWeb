@@ -32,7 +32,12 @@
 						
 						<div class="form-group">
 							<label>작성자</label>
-							<textarea class="form-control" rows="1" name='writer'></textarea>	
+							<c:if test="${sessionScope.name == null }">
+			                    <textarea class="form-control" rows="1" name='writer'></textarea>
+	                        </c:if>
+	                        <c:if test="${sessionScope.name != null }">
+			                    <input class="form-control" name='writer' value='<c:out value="${sessionScope.name }"/>' readonly="readonly">
+	                        </c:if>					
 						</div>
 						<div class="form-group">
 							<label>비밀번호</label>
