@@ -59,7 +59,7 @@ public class coronaUpdateController {
 	    	System.out.println("지금까지 " + num2 + "개의 도시 순위 정보 업데이트 되었습니다.");
 	    }
 	    
-		return "covid19.html";
+		return "covid19.jsp";
 	}
 	
 	@PostMapping(path="/covid_update_japan")
@@ -87,7 +87,7 @@ public class coronaUpdateController {
 	    	System.out.println("지금까지 " + num + "개의 날짜와 확진자 정보 업데이트 되었습니다.");
 	    }
 	    
-		return "covid19.html";
+		return "covid19.jsp";
 	}
 	
 	@PostMapping(path="/covid_update_us")
@@ -115,7 +115,7 @@ public class coronaUpdateController {
 	    	System.out.println("지금까지 " + num + "개의 날짜와 확진자 정보 업데이트 되었습니다.");
 	    }
 	    
-		return "covid19.html";
+		return "covid19.jsp";
 	}
 
 }

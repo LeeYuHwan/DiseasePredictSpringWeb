@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import kr.or.connect.diseasepredict.controller.NaverController;
 import kr.or.connect.diseasepredict.service.EncryptHelper;
 import kr.or.connect.diseasepredict.service.impl.BCryptImpl;
 
@@ -54,4 +55,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
     
     @Bean
     public EncryptHelper encryptConfigure() { return new BCryptImpl(); }
+    
+    @Bean
+    public NaverController naverController() {return new NaverController();}
 }

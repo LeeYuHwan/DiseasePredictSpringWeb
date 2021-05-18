@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class htmlController {
 	@GetMapping("/index")
 	public String index() {
-		return "index.html";
+		return "index.jsp";
 	}
 	@GetMapping("/blank")
 	public String blank() {
@@ -29,10 +29,14 @@ public class htmlController {
 	public String forgot_password() {
 		return "forgot_password.html";
 	}
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public String login() {
-		return "login.html";
+		return "/login_test.jsp";
 	}
+	@GetMapping("/login_success")
+	public String login_success() {
+		return "/login_test_success.jsp";
+	}*/
 	@GetMapping("/register")
 	public String register() {
 		return "register.html";
@@ -63,7 +67,7 @@ public class htmlController {
 	}
 	@GetMapping("/covid19")
 	public String covid() {
-		return "covid19.html";
+		return "covid19.jsp";
 	}
 	
 	//게시판 컨트롤러
