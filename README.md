@@ -16,6 +16,7 @@
 <summary style="font-size:20px;">프로젝트 이미지</summary>
 
 <br>
+  
 감염병별 통계
 --------------------------
 <img src="img/disease1.png">
@@ -26,6 +27,7 @@
 <br>
 
 <br>
+  
 내 주변 선별 진료소 위치
 -------------------------
 <img src="img/disease2.png">
@@ -38,6 +40,7 @@
 </details>
 
 <br>
+  
 코로나 SIR & SEIR 모델
 -------------------------
 <img src="img/SEIR.png">
@@ -56,6 +59,7 @@
 </details>
 
 <br>
+  
 커뮤니티
 -------------------------
 <img src="img/커뮤니티.png">
@@ -64,6 +68,7 @@
 </details>
 
 <br>
+  
 네이버 로그인 API를 이용한 로그인
 -------------------------
 <img src="img/로그인api.png">
@@ -72,6 +77,7 @@
 </details>
 
 <br>
+  
 로그인 결과
 -------------------------
 <img src="img/로그인결과.png">
