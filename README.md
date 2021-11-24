@@ -7,7 +7,7 @@
 
 시연 영상
 --------------------------
-![](img/sample_video.gif)
+![](img/sample_video.webp)
 
 <br>
 <br>
